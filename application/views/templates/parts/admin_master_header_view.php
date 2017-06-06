@@ -1,4 +1,4 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
+﻿<?php defined('BASEPATH') OR exit('No direct script access allowed');?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +36,7 @@
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><strong>Quản lý khách sạn</strong></span>
+            <span class="logo-lg"><strong>Cafe</strong></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -60,112 +60,13 @@
                          alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Nhân viên lễ tân</p>
+                    <p>Nhân viên</p>
                     <p>Yowzah</p>
                 </div>
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header"><h5 style="color: #fff">Menu chính</h5></li>
-                <li class="<?php echo (isset($active_parent) && $active_parent == 'home') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/home"><span>Trang chủ</span></a></li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'booking') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Đặt phòng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'registry') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/booking/registry"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'registry') ? 'text-aqua' : ''; ?>"></i>Đặt phòng</a>
-                        </li>
-                        <li class="<?php echo (isset($active) && $active == 'booking') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/booking"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'booking') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách đặt phòng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'payment') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/payment"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'payment') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách trả phòng</a></li>
-                    </ul>
-                </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'room') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Phòng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'room') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/room"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'room') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách phòng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'add_room') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/room/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'add_room') ? 'text-aqua' : ''; ?>"></i>Thêm
-                                phòng</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'service') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Dịch vụ</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'service') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/service"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'service') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách dịch vụ</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'add_service') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/service/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'add_service') ? 'text-aqua' : ''; ?>"></i>Thêm
-                                dịch vụ</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'rank') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Hạng phòng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'rank') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/rank"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'rank') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách hạng phòng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'add_type') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/rank/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'add_rank') ? 'text-aqua' : ''; ?>"></i>Thêm
-                                hạng phòng</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'type') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Loại phòng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'type') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/type"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'type') ? 'text-aqua' : ''; ?>"></i>Danh
-                                sách loại phòng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'add_type') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/type/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'add_type') ? 'text-aqua' : ''; ?>"></i>Thêm
-                                loại phòng</a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </section>
         <!-- /.sidebar -->

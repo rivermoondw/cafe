@@ -13,15 +13,20 @@
             echo form_open('', $att);
             ?>
             <div class="box-body">
-                <div class="form-group<?php echo (form_error('douong')) ? 'has-error' : ''; ?>">
+                <div class="form-group<?php echo (form_error('phieunhap')) ? 'has-error' : ''; ?>">
                     <label>Đồ uống</label>
-                    <input type="text" class="form-control" placeholder="Nhập đồ uống" name="douong"
-                           value="<?php echo set_value('douong', $douong['douong']); ?>">
+                    <input type="text" class="form-control" placeholder="Nhập đồ uống" name="phieunhap"
+                           value="<?php echo set_value('phieunhap', $phieunhap['phieunhap']); ?>">
                 </div>
-                <div class="form-group<?php echo (form_error('dongia')) ? 'has-error' : ''; ?>">
+                <div class="form-group<?php echo (form_error('nhacungcap_id')) ? 'has-error' : ''; ?>">
                     <label>Đơn giá</label>
-                    <input type="text" class="form-control" placeholder="Nhập đơn giá" name="dongia"
-                           value="<?php echo set_value('dongia', $douong['dongia']); ?>">
+                    <select class="form-control select2" name="nhacungcap_id" style="width: 100%;">
+                        <?php
+                        foreach ($nhacungcap as $key => $val) {
+                            echo '<option value="' . $val['nhacungcap_id'] . '">' . $val['nhacungcap'] . '</option>';
+                        }
+                        ?>
+                    </select>
                 </div>
             </div>
             <!-- /.box-body -->

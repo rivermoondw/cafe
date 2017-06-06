@@ -1,42 +1,35 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Model_nhacungcap extends CI_Model
+class Model_phieunhap extends CI_Model
 {
     function __construct()
     {
         parent::__construct();
     }
 
-    public function get_ncc(){
-        return $this->db->select('nhacungcap_id, nhacungcap')
-            ->from('nhacungcap')
-            ->order_by('nhacungcap', 'ASC')
-            ->get()->result_array();
-    }
-
-    public function get_list($start = NULL, $limit = NULL)
+    public function get_list($start, $limit)
     {
-        return $this->db->select('nhacungcap_id, nhacungcap, diachi, sdt')
-            ->from('nhacungcap')
+        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap_id, nhanvien_id')
+            ->from('phieunhap')
             ->limit($limit, $start)
-            ->order_by('nhacungcap', 'ASC')
+            ->order_by('ngaynhap', 'DESC')
             ->get()->result_array();
     }
 
-    public function get_nhacungcap($id)
+    public function get_phieunhap($id)
     {
-        return $this->db->select('nhacungcap_id, nhacungcap, diachi, sdt')
-            ->from('nhacungcap')
-            ->where('nhacungcap_id', (int)$id)
+        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap_id, nhanvien_id')
+            ->from('phieunhap')
+            ->where('phieunhap_id', (int)$id)
             ->get()->row_array();
     }
 
     public function add()
     {
-        $this->db->insert('nhacungcap', array(
-            'nhacungcap' => $this->input->post('nhacungcap'),
-            'diachi' => $this->input->post('diachi'),
-            'sdt' => $this->input->post('sdt')
+        $this->db->insert('phieunhap', array(
+            'ngaynhap' => $this->input->post('ngaynhap'),
+            'nhacungcap_id' => $this->input->post('nhacungcap_id'),
+            'nhanvien_id' => $this->input->post('nhanvien_id')
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
@@ -54,7 +47,7 @@ class Model_nhacungcap extends CI_Model
 
     public function del($id)
     {
-        $this->db->delete('nhacungcap', array('nhacungcap_id' => (int)$id));
+        $this->db->delete('phieunhap', array('phieunhap_id' => (int)$id));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
             return array(
@@ -71,7 +64,7 @@ class Model_nhacungcap extends CI_Model
 
     public function del_list($checkbox)
     {
-        $this->db->where_in('nhacungcap_id', $checkbox)->delete('nhacungcap');
+        $this->db->where_in('phieunhap_id', $checkbox)->delete('phieunhap');
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
             return array(
@@ -88,10 +81,10 @@ class Model_nhacungcap extends CI_Model
 
     public function edit($id)
     {
-        $this->db->where('nhacungcap_id', (int)$id)->update('nhacungcap', array(
-            'nhacungcap' => $this->input->post('nhacungcap'),
-            'diachi' => $this->input->post('diachi'),
-            'sdt' => $this->input->post('sdt')
+        $this->db->where('phieunhap_id', (int)$id)->update('phieunhap', array(
+            'ngaynhap' => $this->input->post('ngaynhap'),
+            'nhacungcap_id' => $this->input->post('nhacungcap_id'),
+            'nhanvien_id' => $this->input->post('nhanvien_id')
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
@@ -109,6 +102,6 @@ class Model_nhacungcap extends CI_Model
 
     public function total()
     {
-        return $this->db->get('nhacungcap')->num_rows();
+        return $this->db->get('phieunhap')->num_rows();
     }
 }

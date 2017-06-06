@@ -1,21 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Douong extends Admin_Controller
+class Phieunhap extends Admin_Controller
 {
     function __construct()
     {
         parent::__construct();
-        $this->data['page_title'] = 'Quản lý đồ uống';
-        $this->load->model('admin/model_douong');
+        $this->data['page_title'] = 'Quản lý phiếu nhập';
+        $this->load->model('admin/model_phieunhap');
         $this->load->helper('form');
-        $this->data['active_parent'] = 'douong';
+        $this->data['active_parent'] = 'Phieunhap';
     }
 
     public function index($page = 1)
     {
         $this->load->library('pagination');
-        $this->data['active'] = 'douong';
-        $this->data['content_header'] = 'Danh sách đồ uống';
+        $this->data['active'] = 'Phieunhap';
+        $this->data['content_header'] = 'Danh sách phiếu nhập';
         $this->data['before_head'] = '<!-- DataTables -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/datatables/dataTables.bootstrap.css">
   <!-- iCheck -->
@@ -65,16 +65,16 @@ class Douong extends Admin_Controller
         if ($this->input->post('btn-delete')){
             $checkbox = $this->input->post('checkbox');
             if (is_array($checkbox)){
-                $flag = $this->model_douong->del_list($checkbox);
+                $flag = $this->model_phieunhap->del_list($checkbox);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/phieunhap');
             }
             else{
                 $this->session->set_flashdata('message_flashdata', array(
                     'type' => 'error',
                     'message' => 'Bạn phải chọn đối tượng'
                 ));
-                redirect('admin/douong');
+                redirect('admin/phieunhap');
             }
         }
 
@@ -98,8 +98,8 @@ class Douong extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/douong/index/';
-        $config['total_rows'] = $this->model_douong->total();
+        $config['base_url'] = 'http://localhost:8080/qlks/admin/phieunhap/index/';
+        $config['total_rows'] = $this->model_phieunhap->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
         $this->data['pagination'] = $this->pagination->create_links();
@@ -108,14 +108,14 @@ class Douong extends Admin_Controller
         $page = ($page > $total_page)?$total_page:$page;
         $page = ($page < 1)?1:$page;
         $page = $page - 1;
-        $this->data['list_douong'] = $this->model_douong->get_list(($page*$config['per_page']), $config['per_page']);
-        $this->render('admin/douong/list_view');
+        $this->data['list_phieunhap'] = $this->model_phieunhap->get_list(($page*$config['per_page']), $config['per_page']);
+        $this->render('admin/phieunhap/list_view');
     }
 
     public function add()
     {
-        $this->data['page_title'] = 'Thêm đồ uống';
-        $this->data['active'] = 'add_douong';
+        $this->data['page_title'] = 'Thêm phiếu nhập';
+        $this->data['active'] = 'add_phieunhap';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->
@@ -128,72 +128,64 @@ class Douong extends Admin_Controller
     });
   });
 </script>';
-        $this->data['content_header'] = 'Thêm đồ uống';
+        $this->data['content_header'] = 'Thêm phiếu nhập';
+        $this->load->model('model_nhacungcap');
+        $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('douong', 'Tên đồ uống', 'required|trim');
-            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_douong->add();
+                $flag = $this->model_phieunhap->add();
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/phieunhap');
             }
         }
-        $this->render('admin/douong/add_view');
+        $this->render('admin/phieunhap/add_view');
     }
 
     public function del($id = 0)
     {
-        $douong = $this->model_douong->get_douong($id);
-        if (!isset($douong) || count($douong) == 0){
+        $phieunhap = $this->model_phieunhap->get_phieunhap($id);
+        if (!isset($phieunhap) || count($phieunhap) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Đồ uống không tồn tại'
+                'message' => 'Phiếu nhập không tồn tại'
             ));
-            redirect('admin/douong');
+            redirect('admin/phieunhap');
         }
-        $flag = $this->model_douong->del($douong['douong_id']);
+        $flag = $this->model_phieunhap->del($phieunhap['phieunhap_id']);
         $this->session->set_flashdata('message_flashdata', $flag);
-        redirect('admin/douong');
+        redirect('admin/phieunhap');
     }
 
     public function edit($id = 0)
     {
-        $douong = $this->model_douong->get_douong($id);
-        if (!isset($douong) || count($douong) == 0){
+        $phieunhap = $this->model_phieunhap->get_phieunhap($id);
+        if (!isset($phieunhap) || count($phieunhap) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Đồ uống không tồn tại'
+                'message' => 'Phiếu nhập không tồn tại'
             ));
-            redirect('admin/douong');
+            redirect('admin/phieunhap');
         }
-        $this->data['page_title'] = 'Sửa thông tin đồ uống';
-        $this->data['content_header'] = 'Sửa thông tin đồ uống';
+        $this->data['page_title'] = 'Sửa thông tin phiếu nhập';
+        $this->data['content_header'] = 'Sửa thông tin phiếu nhập';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->
-<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2({
-        minimumResultsForSearch: Infinity
-    });
-  });
-</script>';
-        $this->data['douong'] = $douong;
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>';
+        $this->data['phieunhap'] = $phieunhap;
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('douong', 'Tên đồ uống', 'required|trim');
-            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_douong->edit($douong['douong_id']);
+                $flag = $this->model_phieunhap->edit($phieunhap['phieunhap_id']);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/phieunhap');
             }
         }
-        $this->render('admin/douong/edit_view');
+        $this->render('admin/phieunhap/edit_view');
     }
 }

@@ -1,21 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Douong extends Admin_Controller
+class Hanghoa extends Admin_Controller
 {
     function __construct()
     {
         parent::__construct();
-        $this->data['page_title'] = 'Quản lý đồ uống';
-        $this->load->model('admin/model_douong');
+        $this->data['page_title'] = 'Quản lý mặt hàng';
+        $this->load->model('admin/model_hanghoa');
         $this->load->helper('form');
-        $this->data['active_parent'] = 'douong';
+        $this->data['active_parent'] = 'hanghoa';
     }
 
     public function index($page = 1)
     {
         $this->load->library('pagination');
-        $this->data['active'] = 'douong';
-        $this->data['content_header'] = 'Danh sách đồ uống';
+        $this->data['active'] = 'hanghoa';
+        $this->data['content_header'] = 'Danh sách mặt hàng';
         $this->data['before_head'] = '<!-- DataTables -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/datatables/dataTables.bootstrap.css">
   <!-- iCheck -->
@@ -65,16 +65,16 @@ class Douong extends Admin_Controller
         if ($this->input->post('btn-delete')){
             $checkbox = $this->input->post('checkbox');
             if (is_array($checkbox)){
-                $flag = $this->model_douong->del_list($checkbox);
+                $flag = $this->model_hanghoa->del_list($checkbox);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/hanghoa');
             }
             else{
                 $this->session->set_flashdata('message_flashdata', array(
                     'type' => 'error',
                     'message' => 'Bạn phải chọn đối tượng'
                 ));
-                redirect('admin/douong');
+                redirect('admin/hanghoa');
             }
         }
 
@@ -98,8 +98,8 @@ class Douong extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/douong/index/';
-        $config['total_rows'] = $this->model_douong->total();
+        $config['base_url'] = 'http://localhost:8080/qlks/admin/hanghoa/index/';
+        $config['total_rows'] = $this->model_hanghoa->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
         $this->data['pagination'] = $this->pagination->create_links();
@@ -108,14 +108,14 @@ class Douong extends Admin_Controller
         $page = ($page > $total_page)?$total_page:$page;
         $page = ($page < 1)?1:$page;
         $page = $page - 1;
-        $this->data['list_douong'] = $this->model_douong->get_list(($page*$config['per_page']), $config['per_page']);
-        $this->render('admin/douong/list_view');
+        $this->data['list_hanghoa'] = $this->model_hanghoa->get_list(($page*$config['per_page']), $config['per_page']);
+        $this->render('admin/hanghoa/list_view');
     }
 
     public function add()
     {
-        $this->data['page_title'] = 'Thêm đồ uống';
-        $this->data['active'] = 'add_douong';
+        $this->data['page_title'] = 'Thêm mặt hàng';
+        $this->data['active'] = 'add_hanghoa';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->
@@ -128,72 +128,64 @@ class Douong extends Admin_Controller
     });
   });
 </script>';
-        $this->data['content_header'] = 'Thêm đồ uống';
+        $this->data['content_header'] = 'Thêm mặt hàng';
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('douong', 'Tên đồ uống', 'required|trim');
-            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim');
+            $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_douong->add();
+                $flag = $this->model_hanghoa->add();
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/hanghoa');
             }
         }
-        $this->render('admin/douong/add_view');
+        $this->render('admin/hanghoa/add_view');
     }
 
     public function del($id = 0)
     {
-        $douong = $this->model_douong->get_douong($id);
-        if (!isset($douong) || count($douong) == 0){
+        $hanghoa = $this->model_hanghoa->get_hanghoa($id);
+        if (!isset($hanghoa) || count($hanghoa) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Đồ uống không tồn tại'
+                'message' => 'Mặt hàng không tồn tại'
             ));
-            redirect('admin/douong');
+            redirect('admin/hanghoa');
         }
-        $flag = $this->model_douong->del($douong['douong_id']);
+        $flag = $this->model_hanghoa->del($hanghoa['hanghoa_id']);
         $this->session->set_flashdata('message_flashdata', $flag);
-        redirect('admin/douong');
+        redirect('admin/hanghoa');
     }
 
     public function edit($id = 0)
     {
-        $douong = $this->model_douong->get_douong($id);
-        if (!isset($douong) || count($douong) == 0){
+        $hanghoa = $this->model_hanghoa->get_hanghoa($id);
+        if (!isset($hanghoa) || count($hanghoa) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Đồ uống không tồn tại'
+                'message' => 'Mặt hàng không tồn tại'
             ));
-            redirect('admin/douong');
+            redirect('admin/hanghoa');
         }
-        $this->data['page_title'] = 'Sửa thông tin đồ uống';
-        $this->data['content_header'] = 'Sửa thông tin đồ uống';
+        $this->data['page_title'] = 'Sửa thông tin mặt hàng';
+        $this->data['content_header'] = 'Sửa thông tin mặt hàng';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->
-<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2({
-        minimumResultsForSearch: Infinity
-    });
-  });
-</script>';
-        $this->data['douong'] = $douong;
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>';
+        $this->data['hanghoa'] = $hanghoa;
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('douong', 'Tên đồ uống', 'required|trim');
-            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim');
+            $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_douong->edit($douong['douong_id']);
+                $flag = $this->model_hanghoa->edit($hanghoa['hanghoa_id']);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/douong');
+                redirect('admin/hanghoa');
             }
         }
-        $this->render('admin/douong/edit_view');
+        $this->render('admin/hanghoa/edit_view');
     }
 }

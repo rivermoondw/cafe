@@ -13,15 +13,15 @@
             echo form_open('', $att);
             ?>
             <div class="box-body">
-                <div class="form-group<?php echo (form_error('douong')) ? 'has-error' : ''; ?>">
-                    <label>Đồ uống</label>
-                    <input type="text" class="form-control" placeholder="Nhập đồ uống" name="douong"
-                           value="<?php echo set_value('douong', $douong['douong']); ?>">
+                <div class="form-group<?php echo (form_error('tenhanghoa')) ? 'has-error' : ''; ?>">
+                    <label>Mặt hàng</label>
+                    <input type="text" class="form-control" placeholder="Nhập mặt hàng" name="tenhanghoa"
+                           value="<?php echo set_value('tenhanghoa', $hanghoa['tenhanghoa']); ?>">
                 </div>
-                <div class="form-group<?php echo (form_error('dongia')) ? 'has-error' : ''; ?>">
-                    <label>Đơn giá</label>
-                    <input type="text" class="form-control" placeholder="Nhập đơn giá" name="dongia"
-                           value="<?php echo set_value('dongia', $douong['dongia']); ?>">
+                <div class="form-group<?php echo (form_error('dvt')) ? 'has-error' : ''; ?>">
+                    <label>Đơn vị tính</label>
+                    <input type="text" class="form-control" placeholder="Nhập đơn vị tính" name="dvt"
+                           value="<?php echo set_value('dvt', $hanghoa['dvt']); ?>">
                 </div>
             </div>
             <!-- /.box-body -->
