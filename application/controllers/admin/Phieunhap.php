@@ -188,4 +188,18 @@ class Phieunhap extends Admin_Controller
         }
         $this->render('admin/phieunhap/edit_view');
     }
+
+    public function detail($phieunhap_id){
+        $phieunhap = $this->model_phieunhap->get_phieunhap($phieunhap_id);
+        if (!isset($phieunhap) || count($phieunhap) == 0){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Phiếu nhập không tồn tại'
+            ));
+            redirect('admin/phieunhap');
+        }
+        $this->data['page_title'] = 'Chi tiết phiếu nhập';
+        $this->data['content_header'] = 'Chi tiết phiếu nhập';
+        $this->render('admin/phieunhap/detail_view');
+    }
 }
