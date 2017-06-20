@@ -28,6 +28,8 @@
                         <th>Họ tên</th>
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
+                        <th>Địa chỉ</th>
+                        <th>Ngày vào làm</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -39,8 +41,10 @@
                     <tr>
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['nhanvien_id']; ?>"></td>
                         <td><?php echo htmlspecialchars($val['hoten']); ?></td>
-                        <td><?php echo htmlspecialchars($val['ngaysinh']); ?></td>
+                        <td><?php echo nice_date(htmlspecialchars($val['ngaysinh']),'d-m-Y'); ?></td>
                         <td><?php echo htmlspecialchars($val['gioitinh']); ?></td>
+                        <td><?php echo htmlspecialchars($val['diachi']); ?></td>
+                        <td><?php echo nice_date(htmlspecialchars($val['ngaylamviec']),'d-m-Y'); ?></td>
                         <td>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/edit/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Sửa</button></a>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/del/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs del-btn"><i class="fa fa-times"></i> Xóa</button></a>

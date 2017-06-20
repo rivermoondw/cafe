@@ -131,7 +131,7 @@
                                     href="<?php echo base_url(); ?>admin/hanghoa"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'hanghoa') ? 'text-aqua' : ''; ?>"></i>Danh sách hàng hóa</a></li>
                         <li class="<?php echo (isset($active) && $active == 'them_hanghoa') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
+                                    href="<?php echo base_url(); ?>admin/hanghoa/add"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_hanghoa') ? 'text-aqua' : ''; ?>"></i>Thêm hàng hóa</a>
                         </li>
                     </ul>
@@ -145,32 +145,15 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="<?php echo (isset($active) && $active == 'nhaphang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/hanghoa"><i
+                                    href="<?php echo base_url(); ?>admin/phieunhap"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'nhaphang') ? 'text-aqua' : ''; ?>"></i>Danh sách nhập hàng</a></li>
                         <li class="<?php echo (isset($active) && $active == 'them_nhaphang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
+                                    href="<?php echo base_url(); ?>admin/phieunhap/add"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_nhaphang') ? 'text-aqua' : ''; ?>"></i>Thêm nhập hàng</a>
                         </li>
                     </ul>
                 </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'nhaphang') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Quản lý nhập hàng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'nhaphang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/hanghoa"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'nhaphang') ? 'text-aqua' : ''; ?>"></i>Danh sách nhập hàng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'them_nhaphang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_nhaphang') ? 'text-aqua' : ''; ?>"></i>Thêm nhập hàng</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'nhaphang') ? 'active' : ''; ?>">
+                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'xuathang') ? 'active' : ''; ?>">
                     <a href="#">
                         <span>Quản lý xuất hàng</span>
                         <span class="pull-right-container">
@@ -196,10 +179,10 @@
                     </a>
                     <ul class="treeview-menu">
                         <li class="<?php echo (isset($active) && $active == 'nhanvien') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/hanghoa"><i
+                                    href="<?php echo base_url(); ?>admin/nhanvien"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'nhanvien') ? 'text-aqua' : ''; ?>"></i>Danh sách nhân viên</a></li>
                         <li class="<?php echo (isset($active) && $active == 'them_nhanvien') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
+                                    href="<?php echo base_url(); ?>admin/nhanvien/add"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_nhanvien') ? 'text-aqua' : ''; ?>"></i>Thêm nhân viên</a>
                         </li>
                         <li class="<?php echo (isset($active) && $active == 'them_taikhoan') ? 'active' : ''; ?>"><a

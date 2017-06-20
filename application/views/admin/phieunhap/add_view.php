@@ -13,10 +13,15 @@
             echo form_open('', $att);
             ?>
             <div class="box-body">
-                <div class="form-group<?php echo (form_error('ngaynhap')) ? 'has-error' : ''; ?>">
+                <div class="form-group<?php echo (form_error('maphieunhap')) ? 'has-error' : ''; ?>">
+                    <label>Mã phiếu nhập</label>
+                    <input type="text" class="form-control" placeholder="Nhập mã phiếu nhập" name="maphieunhap"
+                           value="<?php echo set_value('maphieunhap', ''); ?>">
+                </div>
+                <div class="form-group <?php echo (form_error('ngaynhap')) ? 'has-error' : ''; ?>">
                     <label>Ngày nhập</label>
                     <input type="text" class="form-control" placeholder="Nhập ngày nhập" name="ngaynhap"
-                           value="<?php echo set_value('ngaynhap', ''); ?>">
+                           value="<?php echo set_value('ngaynhap', ''); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                 </div>
                 <div class="form-group">
                     <label>Nhà cung cấp</label>

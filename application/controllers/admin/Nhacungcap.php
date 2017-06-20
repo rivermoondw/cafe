@@ -115,7 +115,7 @@ class Nhacungcap extends Admin_Controller
     public function add()
     {
         $this->data['page_title'] = 'Thêm nhà cung cấp';
-        $this->data['active'] = 'add_nhacungcap';
+        $this->data['active'] = 'them_nhacungcap';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->

@@ -8,13 +8,14 @@ class Phieunhap extends Admin_Controller
         $this->data['page_title'] = 'Quản lý phiếu nhập';
         $this->load->model('admin/model_phieunhap');
         $this->load->helper('form');
-        $this->data['active_parent'] = 'Phieunhap';
+        $this->data['active_parent'] = 'phieunhap';
     }
 
     public function index($page = 1)
     {
+        $this->load->helper('date');
         $this->load->library('pagination');
-        $this->data['active'] = 'Phieunhap';
+        $this->data['active'] = 'phieunhap';
         $this->data['content_header'] = 'Danh sách phiếu nhập';
         $this->data['before_head'] = '<!-- DataTables -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/datatables/dataTables.bootstrap.css">
@@ -114,22 +115,37 @@ class Phieunhap extends Admin_Controller
 
     public function add()
     {
+        $this->load->helper('date');
         $this->data['page_title'] = 'Thêm phiếu nhập';
-        $this->data['active'] = 'add_phieunhap';
-        $this->data['before_head'] = '<!-- Select2 -->
+        $this->data['active'] = 'them_phieunhap';
+        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
+  <!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
-        $this->data['before_body'] = '<!-- Select2 -->
+        $this->data['before_body'] = '<!-- InputMask -->
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<!-- Select2 -->
 <script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     //Initialize Select2 Elements
-    $(".select2").select2({
-        minimumResultsForSearch: Infinity
+    $(".select2").select2();
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //Flat red color scheme for iCheck
+    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
+      checkboxClass: \'icheckbox_flat-green\',
+      radioClass: \'iradio_flat-green\'
     });
   });
 </script>';
         $this->data['content_header'] = 'Thêm phiếu nhập';
-        $this->load->model('model_nhacungcap');
+        $this->load->model('admin/model_nhacungcap');
         $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
@@ -169,13 +185,37 @@ class Phieunhap extends Admin_Controller
             ));
             redirect('admin/phieunhap');
         }
+        $this->load->helper('date');
         $this->data['page_title'] = 'Sửa thông tin phiếu nhập';
-        $this->data['content_header'] = 'Sửa thông tin phiếu nhập';
-        $this->data['before_head'] = '<!-- Select2 -->
+        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
+  <!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
-        $this->data['before_body'] = '<!-- Select2 -->
-<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>';
+        $this->data['before_body'] = '<!-- InputMask -->
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<!-- Select2 -->
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //Flat red color scheme for iCheck
+    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
+      checkboxClass: \'icheckbox_flat-green\',
+      radioClass: \'iradio_flat-green\'
+    });
+  });
+</script>';
         $this->data['phieunhap'] = $phieunhap;
+        $this->load->model('admin/model_nhacungcap');
+        $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
@@ -198,8 +238,45 @@ class Phieunhap extends Admin_Controller
             ));
             redirect('admin/phieunhap');
         }
+        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
+        $this->data['before_body'] = '<!-- InputMask -->
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<!-- Select2 -->
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //Flat red color scheme for iCheck
+    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
+      checkboxClass: \'icheckbox_flat-green\',
+      radioClass: \'iradio_flat-green\'
+    });
+  });
+</script>';
+        $this->load->helper('date');
         $this->data['page_title'] = 'Chi tiết phiếu nhập';
         $this->data['content_header'] = 'Chi tiết phiếu nhập';
+        $this->data['phieunhap'] = $phieunhap;
+        $this->data['list_hanghoa'] = $this->model_phieunhap->get_list_hanghoa($phieunhap_id);
+        $this->load->model('admin/model_hanghoa');
+        $this->data['hanghoa'] = $this->model_hanghoa->get_list_hanghoa();
+        if ($this->input->post('submit')){
+            $flag = $this->model_phieunhap->add_hanghoa($phieunhap_id);
+            $this->session->set_flashdata('message_flashdata', $flag);
+            $url = 'admin/phieunhap/detail/'.$phieunhap_id;
+            redirect($url);
+        }
         $this->render('admin/phieunhap/detail_view');
     }
 }

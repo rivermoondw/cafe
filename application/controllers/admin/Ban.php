@@ -115,7 +115,7 @@ class Ban extends Admin_Controller
     public function add()
     {
         $this->data['page_title'] = 'Thêm bàn';
-        $this->data['active'] = 'add_ban';
+        $this->data['active'] = 'them_ban';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->

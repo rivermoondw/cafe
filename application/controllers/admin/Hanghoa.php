@@ -115,7 +115,7 @@ class Hanghoa extends Admin_Controller
     public function add()
     {
         $this->data['page_title'] = 'Thêm mặt hàng';
-        $this->data['active'] = 'add_hanghoa';
+        $this->data['active'] = 'them_hanghoa';
         $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
         $this->data['before_body'] = '<!-- Select2 -->
@@ -132,6 +132,7 @@ class Hanghoa extends Admin_Controller
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim');
+            $this->form_validation->set_rules('soluong', 'Số lượng', 'required|trim');
             $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
@@ -178,6 +179,7 @@ class Hanghoa extends Admin_Controller
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim');
+            $this->form_validation->set_rules('soluong', 'Số lượng', 'required|trim');
             $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {

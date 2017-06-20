@@ -21,7 +21,7 @@
                 <div class="form-group <?php echo (form_error('ngaysinh')) ? 'has-error' : ''; ?>">
                     <label>Ngày sinh</label>
                     <input type="text" class="form-control" placeholder="Nhập ngày sinh" name="ngaysinh"
-                           value="<?php echo set_value('ngaysinh', $nhanvien['ngaysinh']); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                           value="<?php echo set_value('ngaysinh', nice_date($nhanvien['ngaysinh'],'d/m/Y')); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                 </div>
                 <div class="form-group">
                     <label>Giới tính: </label>
@@ -29,6 +29,16 @@
                     <label>Nam </label>
                     <input type="radio" name="gioitinh" value="Nữ" class="flat-red" <?php echo ($nhanvien['gioitinh']=='Nữ')?'checked':''; ?>>
                     <label>Nữ</label>
+                </div>
+                <div class="form-group<?php echo (form_error('diachi')) ? 'has-error' : ''; ?>">
+                    <label>Địa chỉ</label>
+                    <input type="text" class="form-control" placeholder="Nhập địa chỉ" name="diachi"
+                           value="<?php echo set_value('diachi', $nhanvien['diachi']); ?>">
+                </div>
+                <div class="form-group <?php echo (form_error('ngaylamviec')) ? 'has-error' : ''; ?>">
+                    <label>Ngày vào làm</label>
+                    <input type="text" class="form-control" placeholder="Nhập ngày vào làm" name="ngaylamviec"
+                           value="<?php echo set_value('ngaylamviec', nice_date($nhanvien['ngaylamviec'],'d/m/Y')); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
                 </div>
             </div>
             <!-- /.box-body -->

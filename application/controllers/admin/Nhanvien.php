@@ -13,6 +13,7 @@ class Nhanvien extends Admin_Controller
 
     public function index($page = 1)
     {
+        $this->load->helper('date');
         $this->load->library('pagination');
         $this->data['active'] = 'nhanvien';
         $this->data['content_header'] = 'Danh sách nhân viên';
@@ -115,7 +116,7 @@ class Nhanvien extends Admin_Controller
     public function add()
     {
         $this->data['page_title'] = 'Thêm nhân viên';
-        $this->data['active'] = 'add_nhanvien';
+        $this->data['active'] = 'them_nhanvien';
         $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
         <!-- Select2 -->
@@ -148,6 +149,8 @@ class Nhanvien extends Admin_Controller
             $this->form_validation->set_rules('hoten', 'Họ tên', 'required|trim');
             $this->form_validation->set_rules('ngaysinh', 'Ngày sinh', 'required|trim');
             $this->form_validation->set_rules('gioitinh', 'Giới tính', 'required|trim');
+            $this->form_validation->set_rules('diachi', 'Địa chỉ', 'required|trim');
+            $this->form_validation->set_rules('ngaylamviec', 'Ngày vào làm', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
                 $flag = $this->model_nhanvien->add();
@@ -183,18 +186,43 @@ class Nhanvien extends Admin_Controller
             ));
             redirect('admin/nhanvien');
         }
+        $this->load->helper('date');
         $this->data['page_title'] = 'Sửa thông tin nhân viên';
         $this->data['content_header'] = 'Sửa thông tin nhân viên';
-        $this->data['before_head'] = '<!-- Select2 -->
+        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
+        <!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
-        $this->data['before_body'] = '<!-- Select2 -->
-<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>';
+        $this->data['before_body'] = '<!-- InputMask -->
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<!-- Select2 -->
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //Flat red color scheme for iCheck
+    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
+      checkboxClass: \'icheckbox_flat-green\',
+      radioClass: \'iradio_flat-green\'
+    });
+  });
+</script>';
         $this->data['nhanvien'] = $nhanvien;
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
             $this->form_validation->set_rules('hoten', 'Họ tên', 'required|trim');
-            $this->form_validation->set_rules('nngaysinh', 'Ngày sinh', 'required|trim');
+            $this->form_validation->set_rules('ngaysinh', 'Ngày sinh', 'required|trim');
             $this->form_validation->set_rules('gioitinh', 'Giới tính', 'required|trim');
+            $this->form_validation->set_rules('diachi', 'Địa chỉ', 'required|trim');
+            $this->form_validation->set_rules('ngaylamviec', 'Ngày vào làm', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
                 $flag = $this->model_nhanvien->edit($nhanvien['nhanvien_id']);

@@ -30,6 +30,16 @@
                     <input type="radio" name="gioitinh" value="Nữ" class="flat-red">
                     <label>Nữ</label>
                 </div>
+                <div class="form-group<?php echo (form_error('diachi')) ? 'has-error' : ''; ?>">
+                    <label>Địa chỉ</label>
+                    <input type="text" class="form-control" placeholder="Nhập địa chỉ" name="diachi"
+                           value="<?php echo set_value('diachi', ''); ?>">
+                </div>
+                <div class="form-group <?php echo (form_error('ngaylamviec')) ? 'has-error' : ''; ?>">
+                    <label>Ngày vào làm</label>
+                    <input type="text" class="form-control" placeholder="Nhập ngày vào làm" name="ngaylamviec"
+                           value="<?php echo set_value('ngaylamviec', ''); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">

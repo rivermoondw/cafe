@@ -25,9 +25,9 @@
                     <thead>
                     <tr>
                         <th><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>
+                        <th>Mã phiếu nhập</th>
                         <th>Ngày nhập</th>
                         <th>Nhà cung cấp</th>
-                        <th>Nhân viên</th>
                         <th>Thao tác</th>
                     </tr>
                     </thead>
@@ -38,8 +38,9 @@
                     ?>
                     <tr>
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['phieunhap_id']; ?>"></td>
-                        <td><?php echo htmlspecialchars($val['tenphieunhap']); ?></td>
-                        <td><?php echo htmlspecialchars($val['socho']); ?></td>
+                        <td><a href="<?php echo base_url() . 'admin/phieunhap/detail/' . $val['phieunhap_id']; ?>" style="color: #333"><?php echo htmlspecialchars($val['maphieunhap']); ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/phieunhap/detail/' . $val['phieunhap_id']; ?>" style="color: #333"><?php echo nice_date(htmlspecialchars($val['ngaynhap']),'d/m/Y'); ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/phieunhap/detail/' . $val['phieunhap_id']; ?>" style="color: #333"><?php echo htmlspecialchars($val['nhacungcap']); ?></a></td>
                         <td>
                             <a href="<?php echo base_url(); ?>admin/phieunhap/edit/<?php echo $val['phieunhap_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Sửa</button></a>
                             <a href="<?php echo base_url(); ?>admin/phieunhap/del/<?php echo $val['phieunhap_id']; ?>"><button type="button" class="btn btn-default btn-xs del-btn"><i class="fa fa-times"></i> Xóa</button></a>

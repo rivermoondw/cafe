@@ -9,7 +9,7 @@ class Model_nhanvien extends CI_Model
 
     public function get_list($start, $limit)
     {
-        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh')
+        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec')
             ->from('nhanvien')
             ->limit($limit, $start)
             ->order_by('nhanvien_id', 'ASC')
@@ -18,7 +18,7 @@ class Model_nhanvien extends CI_Model
 
     public function get_nhanvien($id)
     {
-        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh')
+        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec')
             ->from('nhanvien')
             ->where('nhanvien_id', (int)$id)
             ->get()->row_array();
@@ -26,10 +26,14 @@ class Model_nhanvien extends CI_Model
 
     public function add()
     {
+        $ngaysinh = str_replace('/', '-', $this->input->post('ngaysinh'));
+        $ngaylamviec  = str_replace('/', '-', $this->input->post('ngaylamviec'));
         $this->db->insert('nhanvien', array(
             'hoten' => $this->input->post('hoten'),
-            'ngaysinh' => $this->input->post('ngaysinh'),
-            'gioitinh' => $this->input->post('gioitinh')
+            'ngaysinh' => date('Y-m-d',strtotime($ngaysinh)),
+            'gioitinh' => $this->input->post('gioitinh'),
+            'diachi' => $this->input->post('diachi'),
+            'ngaylamviec' => date('Y-m-d',strtotime($ngaylamviec))
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
@@ -81,10 +85,14 @@ class Model_nhanvien extends CI_Model
 
     public function edit($id)
     {
+        $ngaysinh = str_replace('/', '-', $this->input->post('ngaysinh'));
+        $ngaylamviec  = str_replace('/', '-', $this->input->post('ngaylamviec'));
         $this->db->where('nhanvien_id', (int)$id)->update('nhanvien', array(
             'hoten' => $this->input->post('hoten'),
-            'ngaysinh' => $this->input->post('ngaysinh'),
-            'gioitinh' => $this->input->post('gioitinh')
+            'ngaysinh' => date('Y-m-d',strtotime($ngaysinh)),
+            'gioitinh' => $this->input->post('gioitinh'),
+            'diachi' => $this->input->post('diachi'),
+            'ngaylamviec' => date('Y-m-d',strtotime($ngaylamviec))
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {

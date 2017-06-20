@@ -13,17 +13,24 @@
             echo form_open('', $att);
             ?>
             <div class="box-body">
-                <div class="form-group<?php echo (form_error('phieunhap')) ? 'has-error' : ''; ?>">
-                    <label>Đồ uống</label>
-                    <input type="text" class="form-control" placeholder="Nhập đồ uống" name="phieunhap"
-                           value="<?php echo set_value('phieunhap', $phieunhap['phieunhap']); ?>">
+                <div class="form-group<?php echo (form_error('maphieunhap')) ? 'has-error' : ''; ?>">
+                    <label>Mã phiếu nhập</label>
+                    <input type="text" class="form-control" placeholder="Nhập mã phiếu nhập" name="maphieunhap"
+                           value="<?php echo set_value('maphieunhap', $phieunhap['maphieunhap']); ?>">
                 </div>
-                <div class="form-group<?php echo (form_error('nhacungcap_id')) ? 'has-error' : ''; ?>">
-                    <label>Đơn giá</label>
+                <div class="form-group<?php echo (form_error('ngaynhap')) ? 'has-error' : ''; ?>">
+                    <label>Ngày nhập</label>
+                    <input type="text" class="form-control" placeholder="Nhập ngày nhập" name="ngaynhap"
+                           value="<?php echo set_value('ngaynhap', nice_date($phieunhap['ngaynhap'],'d/m/Y')); ?>" data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                </div>
+                <div class="form-group">
+                    <label>Nhà cung cấp</label>
                     <select class="form-control select2" name="nhacungcap_id" style="width: 100%;">
                         <?php
                         foreach ($nhacungcap as $key => $val) {
-                            echo '<option value="' . $val['nhacungcap_id'] . '">' . $val['nhacungcap'] . '</option>';
+                            ?>
+                            <option value="<?php echo $val['nhacungcap_id'] ?>" <?php echo ($val['nhacungcap_id']==$phieunhap['nhacungcap_id'])?'selected':'' ?>><?php echo $val['nhacungcap']; ?></option>
+                            <?php
                         }
                         ?>
                     </select>
