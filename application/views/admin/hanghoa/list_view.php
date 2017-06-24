@@ -26,7 +26,6 @@
                     <tr>
                         <th><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>
                         <th>Mặt hàng</th>
-                        <th>Số lượng trong kho</th>
                         <th>Đơn vị tính</th>
                         <th>Thao tác</th>
                     </tr>
@@ -39,7 +38,6 @@
                     <tr>
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['hanghoa_id']; ?>"></td>
                         <td><?php echo htmlspecialchars($val['tenhanghoa']); ?></td>
-                        <td><?php echo htmlspecialchars($val['soluong']); ?></td>
                         <td><?php echo htmlspecialchars($val['dvt']); ?></td>
                         <td>
                             <a href="<?php echo base_url(); ?>admin/hanghoa/edit/<?php echo $val['hanghoa_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Sửa</button></a>
@@ -50,7 +48,7 @@
                         }
                     }
                     else{
-                        echo '<tr><td colspan="5">Không có dữ liệu</td></tr>';
+                        echo '<tr><td colspan="4">Không có dữ liệu</td></tr>';
                     }
                     ?>
                     </tbody>

@@ -146,6 +146,9 @@ class Nhanvien extends Admin_Controller
         $this->data['content_header'] = 'Thêm nhân viên';
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
+            $this->form_validation->set_rules('manhanvien', 'Mã nhân viên', 'required|trim|is_unique[nhanvien.manhanvien]',array(
+                'is_unique' => '%s đã tồn tại'
+            ));
             $this->form_validation->set_rules('hoten', 'Họ tên', 'required|trim');
             $this->form_validation->set_rules('ngaysinh', 'Ngày sinh', 'required|trim');
             $this->form_validation->set_rules('gioitinh', 'Giới tính', 'required|trim');
@@ -218,6 +221,9 @@ class Nhanvien extends Admin_Controller
         $this->data['nhanvien'] = $nhanvien;
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
+            $this->form_validation->set_rules('manhanvien', 'Mã nhân viên', 'required|trim|is_unique[nhanvien.manhanvien]',array(
+                'is_unique' => '%s đã tồn tại'
+            ));
             $this->form_validation->set_rules('hoten', 'Họ tên', 'required|trim');
             $this->form_validation->set_rules('ngaysinh', 'Ngày sinh', 'required|trim');
             $this->form_validation->set_rules('gioitinh', 'Giới tính', 'required|trim');

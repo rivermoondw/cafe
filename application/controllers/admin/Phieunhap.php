@@ -149,6 +149,9 @@ class Phieunhap extends Admin_Controller
         $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
+            $this->form_validation->set_rules('maphieunhap', 'Mã phiếu nhập', 'required|trim|is_unique[phieunhap.maphieunhap]',array(
+                'is_unique' => '%s đã tồn tại'
+            ));
             $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
@@ -218,6 +221,9 @@ class Phieunhap extends Admin_Controller
         $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
+            $this->form_validation->set_rules('maphieunhap', 'Mã phiếu nhập', 'required|trim|is_unique[phieunhap.maphieunhap]',array(
+                'is_unique' => '%s đã tồn tại'
+            ));
             $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
@@ -271,11 +277,17 @@ class Phieunhap extends Admin_Controller
         $this->data['list_hanghoa'] = $this->model_phieunhap->get_list_hanghoa($phieunhap_id);
         $this->load->model('admin/model_hanghoa');
         $this->data['hanghoa'] = $this->model_hanghoa->get_list_hanghoa();
+        $this->load->library('form_validation');
         if ($this->input->post('submit')){
-            $flag = $this->model_phieunhap->add_hanghoa($phieunhap_id);
-            $this->session->set_flashdata('message_flashdata', $flag);
-            $url = 'admin/phieunhap/detail/'.$phieunhap_id;
-            redirect($url);
+            $this->form_validation->set_rules('soluongnhap', 'Số lượng nhập', 'required|trim');
+            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
+            if ($this->form_validation->run() === TRUE){
+                $flag = $this->model_phieunhap->add_hanghoa($phieunhap_id);
+                $this->session->set_flashdata('message_flashdata', $flag);
+                $url = 'admin/phieunhap/detail/'.$phieunhap_id;
+                redirect($url);
+            }
         }
         $this->render('admin/phieunhap/detail_view');
     }

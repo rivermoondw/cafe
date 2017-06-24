@@ -93,6 +93,7 @@
             ?>
             <div class="box-header">
                 <h3 class="box-title">Thêm hàng hóa</h3>
+                <?php echo validation_errors(); ?>
             </div>
             <div class="box-body">
                 <div class="row">
@@ -114,7 +115,7 @@
                     <div class="form-group col-xs-4">
                         <label>Đơn giá</label>
                         <input type="text" class="form-control" placeholder="Nhập đơn giá" name="dongia"
-                               value="<?php echo set_value('dongia', ''); ?>">
+                               value="<?php echo set_value('dongia', '0'); ?>">
                     </div>
                 </div>
             </div>

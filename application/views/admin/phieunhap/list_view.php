@@ -59,7 +59,7 @@
             <!-- /.box-body -->
             <div class="box-footer no-border">
                 <button type="submit" name="btn-delete" value="btn-delete" class="btn btn-default" id="del-list"><i class="fa fa-trash-o"></i> Xóa lựa chọn</button>
-                <a href="<?php echo base_url(); ?>admin/phieunhap/add"><button type="button" class="btn btn-default"><i class="fa fa-plus"></i> Thêm bàn</button></a>
+                <a href="<?php echo base_url(); ?>admin/phieunhap/add"><button type="button" class="btn btn-default"><i class="fa fa-plus"></i> Thêm phiếu nhập</button></a>
                 <?php echo isset($pagination)?$pagination:''; ?>
             </div>
             <?php echo form_close(); ?>

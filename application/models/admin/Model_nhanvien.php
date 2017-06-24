@@ -9,7 +9,7 @@ class Model_nhanvien extends CI_Model
 
     public function get_list($start, $limit)
     {
-        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec')
+        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec, manhanvien')
             ->from('nhanvien')
             ->limit($limit, $start)
             ->order_by('nhanvien_id', 'ASC')
@@ -18,7 +18,7 @@ class Model_nhanvien extends CI_Model
 
     public function get_nhanvien($id)
     {
-        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec')
+        return $this->db->select('nhanvien_id, hoten, ngaysinh, gioitinh, diachi, ngaylamviec, manhanvien')
             ->from('nhanvien')
             ->where('nhanvien_id', (int)$id)
             ->get()->row_array();
@@ -29,6 +29,7 @@ class Model_nhanvien extends CI_Model
         $ngaysinh = str_replace('/', '-', $this->input->post('ngaysinh'));
         $ngaylamviec  = str_replace('/', '-', $this->input->post('ngaylamviec'));
         $this->db->insert('nhanvien', array(
+            'manhanvien' => $this->input->post('manhanvien'),
             'hoten' => $this->input->post('hoten'),
             'ngaysinh' => date('Y-m-d',strtotime($ngaysinh)),
             'gioitinh' => $this->input->post('gioitinh'),
@@ -88,6 +89,7 @@ class Model_nhanvien extends CI_Model
         $ngaysinh = str_replace('/', '-', $this->input->post('ngaysinh'));
         $ngaylamviec  = str_replace('/', '-', $this->input->post('ngaylamviec'));
         $this->db->where('nhanvien_id', (int)$id)->update('nhanvien', array(
+            'manhanvien' => $this->input->post('manhanvien'),
             'hoten' => $this->input->post('hoten'),
             'ngaysinh' => date('Y-m-d',strtotime($ngaysinh)),
             'gioitinh' => $this->input->post('gioitinh'),

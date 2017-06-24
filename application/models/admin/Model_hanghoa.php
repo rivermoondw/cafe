@@ -9,7 +9,7 @@ class Model_hanghoa extends CI_Model
 
     public function get_list($start, $limit)
     {
-        return $this->db->select('hanghoa_id, tenhanghoa, dvt, soluong')
+        return $this->db->select('hanghoa_id, tenhanghoa, dvt')
             ->from('hanghoa')
             ->limit($limit, $start)
             ->order_by('tenhanghoa', 'ASC')
@@ -18,7 +18,7 @@ class Model_hanghoa extends CI_Model
 
     public function get_hanghoa($id)
     {
-        return $this->db->select('hanghoa_id, tenhanghoa, dvt, soluong')
+        return $this->db->select('hanghoa_id, tenhanghoa, dvt')
             ->from('hanghoa')
             ->where('hanghoa_id', (int)$id)
             ->get()->row_array();
@@ -34,7 +34,6 @@ class Model_hanghoa extends CI_Model
     {
         $this->db->insert('hanghoa', array(
             'tenhanghoa' => $this->input->post('tenhanghoa'),
-            'soluong' => $this->input->post('soluong'),
             'dvt' => $this->input->post('dvt')
         ));
         $flag = $this->db->affected_rows();
@@ -89,7 +88,6 @@ class Model_hanghoa extends CI_Model
     {
         $this->db->where('hanghoa_id', (int)$id)->update('hanghoa', array(
             'tenhanghoa' => $this->input->post('tenhanghoa'),
-            'soluong' => $this->input->post('soluong'),
             'dvt' => $this->input->post('dvt')
         ));
         $flag = $this->db->affected_rows();

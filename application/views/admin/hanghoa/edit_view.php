@@ -18,11 +18,6 @@
                     <input type="text" class="form-control" placeholder="Nhập mặt hàng" name="tenhanghoa"
                            value="<?php echo set_value('tenhanghoa', $hanghoa['tenhanghoa']); ?>">
                 </div>
-                <div class="form-group<?php echo (form_error('soluong')) ? 'has-error' : ''; ?>">
-                    <label>Số lượng trong kho</label>
-                    <input type="text" class="form-control" placeholder="Nhập số lượng" name="soluong"
-                           value="<?php echo set_value('soluong', $hanghoa['soluong']); ?>">
-                </div>
                 <div class="form-group<?php echo (form_error('dvt')) ? 'has-error' : ''; ?>">
                     <label>Đơn vị tính</label>
                     <input type="text" class="form-control" placeholder="Nhập đơn vị tính" name="dvt"

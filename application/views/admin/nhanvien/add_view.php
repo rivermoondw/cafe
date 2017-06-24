@@ -13,6 +13,11 @@
             echo form_open('', $att);
             ?>
             <div class="box-body">
+                <div class="form-group<?php echo (form_error('manhanvien')) ? 'has-error' : ''; ?>">
+                    <label>Mã nhân viên</label>
+                    <input type="text" class="form-control" placeholder="Nhập mã nhân viên" name="manhanvien"
+                           value="<?php echo set_value('manhanvien', ''); ?>">
+                </div>
                 <div class="form-group<?php echo (form_error('hoten')) ? 'has-error' : ''; ?>">
                     <label>Họ tên</label>
                     <input type="text" class="form-control" placeholder="Nhập họ tên" name="hoten"

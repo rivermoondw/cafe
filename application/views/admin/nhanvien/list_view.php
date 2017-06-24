@@ -25,6 +25,7 @@
                     <thead>
                     <tr>
                         <th><button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i></button></th>
+                        <th>Mã nhân viên</th>
                         <th>Họ tên</th>
                         <th>Ngày sinh</th>
                         <th>Giới tính</th>
@@ -40,6 +41,7 @@
                     ?>
                     <tr>
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['nhanvien_id']; ?>"></td>
+                        <td><?php echo htmlspecialchars($val['manhanvien']); ?></td>
                         <td><?php echo htmlspecialchars($val['hoten']); ?></td>
                         <td><?php echo nice_date(htmlspecialchars($val['ngaysinh']),'d-m-Y'); ?></td>
                         <td><?php echo htmlspecialchars($val['gioitinh']); ?></td>
