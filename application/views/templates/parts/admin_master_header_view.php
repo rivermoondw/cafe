@@ -153,23 +153,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'xuathang') ? 'active' : ''; ?>">
-                    <a href="#">
-                        <span>Quản lý xuất hàng</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="<?php echo (isset($active) && $active == 'xuathang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/hanghoa"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'xuathang') ? 'text-aqua' : ''; ?>"></i>Danh sách xuất hàng</a></li>
-                        <li class="<?php echo (isset($active) && $active == 'them_xuathang') ? 'active' : ''; ?>"><a
-                                    href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
-                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_xuathang') ? 'text-aqua' : ''; ?>"></i>Thêm xuất hàng</a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'nhanvien') ? 'active' : ''; ?>">
                     <a href="#">
                         <span>Quản lý nhân viên</span>

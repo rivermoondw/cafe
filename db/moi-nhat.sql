@@ -25,11 +25,11 @@ CREATE TABLE `ban` (
   `tenban` int(3) DEFAULT NULL,
   `socho` smallint(6) DEFAULT NULL,
   PRIMARY KEY (`ban_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ban` */
 
-insert  into `ban`(`ban_id`,`tenban`,`socho`) values (1,1,5),(2,2,4),(3,3,4);
+insert  into `ban`(`ban_id`,`tenban`,`socho`) values (2,2,4),(3,3,4),(4,1,4);
 
 /*Table structure for table `cthoadon` */
 
@@ -54,25 +54,13 @@ CREATE TABLE `ctphieunhap` (
   `phieunhap_id` int(11) DEFAULT NULL,
   `hanghoa_id` int(11) DEFAULT NULL,
   `soluongnhap` int(11) DEFAULT NULL,
-  `thanhtien` int(11) DEFAULT NULL,
+  `dongia` int(11) DEFAULT NULL,
   PRIMARY KEY (`ctphieunhap_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ctphieunhap` */
 
-/*Table structure for table `ctphieuxuat` */
-
-DROP TABLE IF EXISTS `ctphieuxuat`;
-
-CREATE TABLE `ctphieuxuat` (
-  `ctphieuxuat_id` int(11) NOT NULL AUTO_INCREMENT,
-  `phieuxuat_id` int(11) DEFAULT NULL,
-  `hanghoa_id` int(11) DEFAULT NULL,
-  `soluongxuat` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ctphieuxuat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `ctphieuxuat` */
+insert  into `ctphieunhap`(`ctphieunhap_id`,`phieunhap_id`,`hanghoa_id`,`soluongnhap`,`dongia`) values (1,4,5,1,20000),(2,4,6,5,40000);
 
 /*Table structure for table `douong` */
 
@@ -99,11 +87,11 @@ CREATE TABLE `hanghoa` (
   `dvt` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `soluong` int(11) DEFAULT NULL,
   PRIMARY KEY (`hanghoa_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `hanghoa` */
 
-insert  into `hanghoa`(`hanghoa_id`,`tenhanghoa`,`dvt`,`soluong`) values (1,'MH1','kg',NULL),(2,'MH2','chiếc',NULL),(3,'MH3','chiếc',NULL);
+insert  into `hanghoa`(`hanghoa_id`,`tenhanghoa`,`dvt`,`soluong`) values (5,'MH1','kg',5),(6,'MH2','kg',3);
 
 /*Table structure for table `hoadon` */
 
@@ -111,6 +99,7 @@ DROP TABLE IF EXISTS `hoadon`;
 
 CREATE TABLE `hoadon` (
   `hoadon_id` int(11) NOT NULL AUTO_INCREMENT,
+  `mahoadon` varchar(255) DEFAULT NULL,
   `ngaylap` date DEFAULT NULL,
   `nhanvien_id` int(11) DEFAULT NULL,
   `ban_id` int(11) DEFAULT NULL,
@@ -148,9 +137,11 @@ CREATE TABLE `nhanvien` (
   `diachi` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `ngaylamviec` date DEFAULT NULL,
   PRIMARY KEY (`nhanvien_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `nhanvien` */
+
+insert  into `nhanvien`(`nhanvien_id`,`hoten`,`ngaysinh`,`gioitinh`,`diachi`,`ngaylamviec`) values (1,'Hoang Loc','1996-01-27','Nam','Hai Phong','2017-06-20');
 
 /*Table structure for table `phieunhap` */
 
@@ -158,25 +149,16 @@ DROP TABLE IF EXISTS `phieunhap`;
 
 CREATE TABLE `phieunhap` (
   `phieunhap_id` int(11) NOT NULL AUTO_INCREMENT,
+  `maphieunhap` varchar(255) DEFAULT NULL,
   `ngaynhap` date DEFAULT NULL,
   `nhacungcap_id` int(11) DEFAULT NULL,
   `nhanvien_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`phieunhap_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `phieunhap` */
 
-/*Table structure for table `phieuxuat` */
-
-DROP TABLE IF EXISTS `phieuxuat`;
-
-CREATE TABLE `phieuxuat` (
-  `phieuxuat_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ngayxuat` date DEFAULT NULL,
-  PRIMARY KEY (`phieuxuat_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `phieuxuat` */
+insert  into `phieunhap`(`phieunhap_id`,`maphieunhap`,`ngaynhap`,`nhacungcap_id`,`nhanvien_id`) values (1,NULL,'2017-02-27',1,NULL),(3,'PN01','1970-01-01',2,NULL),(4,'PN02','2017-06-27',2,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
