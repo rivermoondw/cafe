@@ -131,7 +131,9 @@ class Hanghoa extends Admin_Controller
         $this->data['content_header'] = 'Thêm mặt hàng';
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim');
+            $this->form_validation->set_rules('tenhanghoa', 'Tên mặt hàng', 'required|trim|is_unique[hanghoa.tenhanghoa]', array(
+                'is_unique' => '%s đã tồn tại'
+            ));
             $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {

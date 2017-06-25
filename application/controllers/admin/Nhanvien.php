@@ -238,4 +238,63 @@ class Nhanvien extends Admin_Controller
         }
         $this->render('admin/nhanvien/edit_view');
     }
+
+    public function register($nhanvien_id){
+        $nhanvien = $this->model_nhanvien->get_nhanvien($nhanvien_id);
+        if (!isset($nhanvien) || count($nhanvien) == 0){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Nhân viên không tồn tại'
+            ));
+            redirect('admin/nhanvien');
+        }
+        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
+        $this->data['before_body'] = '<!-- InputMask -->
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
+<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
+<!-- Select2 -->
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
+<!-- iCheck 1.0.1 -->
+<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $(".select2").select2();
+    //Datemask dd/mm/yyyy
+    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
+    //Money Euro
+    $("[data-mask]").inputmask();
+    //Flat red color scheme for iCheck
+    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
+      checkboxClass: \'icheckbox_flat-green\',
+      radioClass: \'iradio_flat-green\'
+    });
+  });
+</script>';
+        $this->data['nhanvien'] = $nhanvien;
+        if ($this->input->post('submit')){
+            $this->load->library('form_validation');
+            $this->form_validation->set_rules('username', 'Tên đăng nhập', 'required|trim|is_unique[users.username]', array(
+                'is_unique' => '%s đã tồn tại'
+            ));
+            $this->form_validation->set_rules('password', 'Mật khẩu', 'required|trim');
+            $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
+            if ($this->form_validation->run() === TRUE){
+                $this->load->library('ion_auth');
+                $username = $this->input->post('username');
+                $password = $this->input->post('password');
+                $email = $this->input->post('email');
+                $group = array($this->input->post('group'));
+                $additional_data = array(
+                    'nhanvien_id' => $nhanvien_id
+                );
+                $this->ion_auth->register($username, $password, $email, $additional_data, $group);
+                redirect('admin/nhanvien');
+            }
+        }
+        $this->render('admin/nhanvien/register_view');
+    }
 }
