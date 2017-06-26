@@ -289,6 +289,10 @@ class Phieunhap extends Admin_Controller
                 redirect($url);
             }
         }
+        if ($this->input->post('confirm')){
+            $flag = $this->model_phieunhap->confirm($phieunhap_id);
+
+        }
         $this->render('admin/phieunhap/detail_view');
     }
 }

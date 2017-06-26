@@ -24,6 +24,13 @@ class Model_nhanvien extends CI_Model
             ->get()->row_array();
     }
 
+    public function get_taikhoan(){
+        return $this->db->distinct()->select('nhanvien.nhanvien_id')
+            ->from('nhanvien')
+            ->join('users', 'users.nhanvien_id = nhanvien.nhanvien_id')
+            ->get()->result_array();
+    }
+
     public function add()
     {
         $ngaysinh = str_replace('/', '-', $this->input->post('ngaysinh'));

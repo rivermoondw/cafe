@@ -35,6 +35,24 @@ class Model_phieunhap extends CI_Model
             ->get()->result_array();
     }
 
+    public function confirm($phieunhap_id){
+        $this->db->where('phieunhap_id', (int)$phieunhap_id)->update('phieunhap', array(
+            'trangthai' => 1
+        ));
+        $flag = $this->db->affected_rows();
+        if ($flag > 0) {
+            return array(
+                'type' => 'success',
+                'message' => 'Cập nhật dữ liệu thành công'
+            );
+        } else {
+            return array(
+                'type' => 'error',
+                'message' => 'Lỗi cập nhật dữ liệu'
+            );
+        }
+    }
+
     public function add_hanghoa($phieunhap_id){
         $this->db->insert('ctphieunhap', array(
             'phieunhap_id' => $phieunhap_id,
@@ -62,7 +80,8 @@ class Model_phieunhap extends CI_Model
         $this->db->insert('phieunhap', array(
             'ngaynhap' => date('Y-m-d',strtotime($ngaynhap)),
             'nhacungcap_id' => $this->input->post('nhacungcap_id'),
-            'maphieunhap' => $this->input->post('maphieunhap')
+            'maphieunhap' => $this->input->post('maphieunhap'),
+            'trangthai' => 0
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {

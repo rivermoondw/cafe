@@ -137,9 +137,11 @@ class Hanghoa extends Admin_Controller
             $this->form_validation->set_rules('dvt', 'Đơn vị tính', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
+                $redirect = $this->input->get('redirect');
+                $redirect = !empty($redirect)?base64_decode($redirect):'admin/hanghoa';
                 $flag = $this->model_hanghoa->add();
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/hanghoa');
+                redirect($redirect);
             }
         }
         $this->render('admin/hanghoa/add_view');

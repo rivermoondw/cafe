@@ -1,3 +1,6 @@
+<?php
+print_r($list_taikhoan);
+?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -50,6 +53,13 @@
                         <td>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/edit/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Sửa</button></a>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/del/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs del-btn"><i class="fa fa-times"></i> Xóa</button></a>
+                            <?php
+                            if (!in_array($val['nhanvien_id'],$list_taikhoan)){
+                            ?>
+                                <a href="<?php echo base_url(); ?>admin/nhanvien/register/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-plus"></i> Thêm tài khoản</button></a>
+                            <?php
+                            }
+                            ?>
                         </td>
                     </tr>
                     <?php

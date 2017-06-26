@@ -68,6 +68,10 @@
             <ul class="sidebar-menu">
                 <li class="header"><h5 style="color: #fff">Menu chính</h5></li>
                 <li class="<?php echo (isset($active_parent) && $active_parent == 'trangchu') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/home"><span>Trang chủ</span></a></li>
+                <?php
+                $group = array('seller','admin');
+                if ($this->ion_auth->in_group($group)){
+                ?>
                 <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'ban') ? 'active' : ''; ?>">
                     <a href="#">
                         <span>Quản lý bàn</span>
@@ -103,6 +107,7 @@
                     </ul>
                 </li>
                 <?php
+                }
                 $group = array('manager','admin');
                 if ($this->ion_auth->in_group($group)){
                 ?>
@@ -175,10 +180,6 @@
                             <li class="<?php echo (isset($active) && $active == 'them_nhanvien') ? 'active' : ''; ?>"><a
                                         href="<?php echo base_url(); ?>admin/nhanvien/add"><i
                                             class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_nhanvien') ? 'text-aqua' : ''; ?>"></i>Thêm nhân viên</a>
-                            </li>
-                            <li class="<?php echo (isset($active) && $active == 'them_taikhoan') ? 'active' : ''; ?>"><a
-                                        href="<?php echo base_url(); ?>admin/nhacungcap/add"><i
-                                            class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_taikhoan') ? 'text-aqua' : ''; ?>"></i>Thêm tài khoản</a>
                             </li>
                         </ul>
                     </li>

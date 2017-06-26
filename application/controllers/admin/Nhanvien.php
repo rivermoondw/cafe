@@ -110,6 +110,10 @@ class Nhanvien extends Admin_Controller
         $page = ($page < 1)?1:$page;
         $page = $page - 1;
         $this->data['list_nhanvien'] = $this->model_nhanvien->get_list(($page*$config['per_page']), $config['per_page']);
+        $list_taikhoan = $this->model_nhanvien->get_taikhoan();
+        foreach ($list_taikhoan as $key => $val){
+            $this->data['list_taikhoan'][] = $val['nhanvien_id'];
+        }
         $this->render('admin/nhanvien/list_view');
     }
 

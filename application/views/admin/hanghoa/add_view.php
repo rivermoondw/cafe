@@ -9,8 +9,9 @@
             <!-- /.box-header -->
             <!-- form start -->
             <?php
+            $current_url = current_url().'?'.$_SERVER['QUERY_STRING'];
             $att = array('role' => 'form');
-            echo form_open('', $att);
+            echo form_open($current_url, $att);
             ?>
             <div class="box-body">
                 <div class="form-group<?php echo (form_error('tenhanghoa')) ? 'has-error' : ''; ?>">

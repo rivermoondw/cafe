@@ -41,6 +41,19 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-body">
+                <?php
+                $att = array('role' => 'form');
+                echo form_open('', $att);
+                ?>
+                <input type="submit" name="confirm" value="Xác nhận phiếu nhập" class="btn btn-success">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         <div class="box box-primary box-solid">
             <div class="box-header">
@@ -87,10 +100,6 @@
     </div>
     <div class="col-md-6">
         <div class="box box-primary box-solid">
-            <?php
-            $att = array('role' => 'form');
-            echo form_open('', $att);
-            ?>
             <div class="box-header">
                 <h3 class="box-title">Thêm hàng hóa</h3>
                 <?php echo validation_errors(); ?>
@@ -120,7 +129,8 @@
                 </div>
             </div>
             <div class="box-footer">
-                <input type="submit" name="submit" value="Xác nhận" class="btn btn-primary">
+                <input type="submit" name="submit" value="Thêm vào phiếu nhập" class="btn btn-primary">
+                <a href="<?php echo base_url(); ?>admin/hanghoa/add?redirect=<?php echo base64_encode(uri_string()); ?>"><button type="button" class="btn btn-primary btn-default" style="color:#fff"><i class="fa fa-plus"></i> Thêm mặt hàng mới</button></a>
             </div>
             <?php echo form_close(); ?>
         </div>
