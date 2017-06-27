@@ -203,7 +203,7 @@
                 <?php
                 }
                 ?>
-                <li class="<?php echo (isset($active_parent) && $active_parent == 'statistic') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/statistic"><span>Thống kê</span></a></li>
+                <li class="<?php echo (isset($active_parent) && $active_parent == 'thongke') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/thongke"><span>Thống kê</span></a></li>
                 <li><a href="<?php echo base_url(); ?>admin/user/logout"><span>Đăng xuất</span></a></li>
             </ul>
         </section>
