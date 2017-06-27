@@ -9,6 +9,13 @@ class Nhanvien extends Admin_Controller
         $this->load->model('admin/model_nhanvien');
         $this->load->helper('form');
         $this->data['active_parent'] = 'nhanvien';
+        if (!$this->ion_auth->is_admin()){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Bạn không có quyền truy cập vào trang này'
+            ));
+            redirect('admin/home');
+        }
     }
 
     public function index($page = 1)
@@ -99,7 +106,7 @@ class Nhanvien extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/nhanvien/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/nhanvien/index/';
         $config['total_rows'] = $this->model_nhanvien->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
@@ -111,8 +118,10 @@ class Nhanvien extends Admin_Controller
         $page = $page - 1;
         $this->data['list_nhanvien'] = $this->model_nhanvien->get_list(($page*$config['per_page']), $config['per_page']);
         $list_taikhoan = $this->model_nhanvien->get_taikhoan();
-        foreach ($list_taikhoan as $key => $val){
-            $this->data['list_taikhoan'][] = $val['nhanvien_id'];
+        if (isset($list_taikhoan)&&count($list_taikhoan)!=0){
+            foreach ($list_taikhoan as $key => $val){
+                $this->data['list_taikhoan'][] = $val['nhanvien_id'];
+            }
         }
         $this->render('admin/nhanvien/list_view');
     }

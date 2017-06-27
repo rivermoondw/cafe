@@ -9,6 +9,14 @@ class Hoadon extends Admin_Controller
         $this->load->model('admin/model_hoadon');
         $this->load->helper('form');
         $this->data['active_parent'] = 'hoadon';
+        $groups = array('admin','seller');
+        if (!$this->ion_auth->in_group($groups)){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Bạn không có quyền truy cập vào trang này'
+            ));
+            redirect('admin/home');
+        }
     }
 
     public function index($page = 1)
@@ -98,7 +106,7 @@ class Hoadon extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/pttk/admin/hoadon/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/hoadon/index/';
         $config['total_rows'] = $this->model_hoadon->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
@@ -144,7 +152,8 @@ class Hoadon extends Admin_Controller
         if ($this->input->post('submit')) {
             $flag = $this->model_hoadon->add();
             $this->session->set_flashdata('message_flashdata', $flag);
-            redirect('admin/hoadon');
+            $url = 'admin/hoadon/detail/'.$flag['last_id'];
+            redirect($url);
         }
         $this->render('admin/hoadon/add_view');
     }
@@ -155,7 +164,7 @@ class Hoadon extends Admin_Controller
         if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Bàn không tồn tại'
+                'message' => 'Hóa đơn không tồn tại'
             ));
             redirect('admin/hoadon');
         }
@@ -170,7 +179,7 @@ class Hoadon extends Admin_Controller
         if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Bàn không tồn tại'
+                'message' => 'Hóa đơn không tồn tại'
             ));
             redirect('admin/hoadon');
         }
@@ -200,7 +209,7 @@ class Hoadon extends Admin_Controller
         if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Bàn không tồn tại'
+                'message' => 'Hóa đơn không tồn tại'
             ));
             redirect('admin/hoadon');
         }
@@ -234,8 +243,15 @@ class Hoadon extends Admin_Controller
 </script>';
         $this->load->helper('date');
         $this->data['hoadon'] = $hoadon;
-        $this->data['list_douong'] = $this->model_hoadon->get_douong($hoadon_id);
-        $this->data['douong'] = $this->model_hoadon->get_list_douong();
+        $list_douong = $this->model_hoadon->get_douong($hoadon_id);
+        $this->data['list_douong'] = $list_douong;
+        $data = array();
+        if (isset($list_douong)&&count($list_douong)!=0){
+            foreach ($list_douong as $key => $val){
+                $data[] = $val['douong_id'];
+            }
+        }
+        $this->data['douong'] = $this->model_hoadon->get_list_douong($data);
         $this->load->library('form_validation');
         if ($this->input->post('submit')){
             $this->form_validation->set_rules('soluong', 'Số lượng nhập', 'required|trim');
@@ -248,9 +264,22 @@ class Hoadon extends Admin_Controller
             }
         }
         if ($this->input->post('thanhtoan')){
-            $flag = $this->model_hoadon->thanhtoan($hoadon_id);
+            $list_ban = $this->model_hoadon->get_list_ban($hoadon_id);
+            $data = array();
+            if (isset($list_ban)&&count($list_ban)!=0){
+                foreach ($list_ban as $key => $val){
+                    $data[] = $val['ban_id'];
+                }
+            }
+            $flag = $this->model_hoadon->thanhtoan($hoadon_id, $data);
             $this->session->set_flashdata('message_flashdata', $flag);
             redirect('admin/hoadon');
+        }
+        if ($this->input->post('del')){
+            $flag = $this->model_hoadon->del_douong($this->input->post('del'));
+            $this->session->set_flashdata('message_flashdata', $flag);
+            $url = 'admin/hoadon/detail/'.$hoadon_id;
+            redirect($url);
         }
         $this->render('admin/hoadon/detail_view');
     }

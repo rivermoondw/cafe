@@ -9,6 +9,14 @@ class Phieunhap extends Admin_Controller
         $this->load->model('admin/model_phieunhap');
         $this->load->helper('form');
         $this->data['active_parent'] = 'phieunhap';
+        $groups = array('admin','manager');
+        if (!$this->ion_auth->in_group($groups)){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Bạn không có quyền truy cập vào trang này'
+            ));
+            redirect('admin/home');
+        }
     }
 
     public function index($page = 1)
@@ -99,7 +107,7 @@ class Phieunhap extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/phieunhap/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/phieunhap/index/';
         $config['total_rows'] = $this->model_phieunhap->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
@@ -157,7 +165,8 @@ class Phieunhap extends Admin_Controller
             if ($this->form_validation->run() === TRUE) {
                 $flag = $this->model_phieunhap->add();
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/phieunhap');
+                $url = (isset($flag['last_id']))?'admin/phieunhap/detail'.$flag['last_id']:'admin/phieunhap';
+                redirect($url);
             }
         }
         $this->render('admin/phieunhap/add_view');
@@ -274,9 +283,16 @@ class Phieunhap extends Admin_Controller
         $this->data['page_title'] = 'Chi tiết phiếu nhập';
         $this->data['content_header'] = 'Chi tiết phiếu nhập';
         $this->data['phieunhap'] = $phieunhap;
-        $this->data['list_hanghoa'] = $this->model_phieunhap->get_list_hanghoa($phieunhap_id);
+        $list_hanghoa = $this->model_phieunhap->get_list_hanghoa($phieunhap_id);
+        $data = array();
+        if (isset($list_hanghoa)&&count($list_hanghoa)!=0){
+            foreach ($list_hanghoa as $key => $val){
+                $data[] = $val['hanghoa_id'];
+            }
+        }
+        $this->data['list_hanghoa'] = $list_hanghoa;
         $this->load->model('admin/model_hanghoa');
-        $this->data['hanghoa'] = $this->model_hanghoa->get_list_hanghoa();
+        $this->data['hanghoa'] = $this->model_hanghoa->get_list_hanghoa($data);
         $this->load->library('form_validation');
         if ($this->input->post('submit')){
             $this->form_validation->set_rules('soluongnhap', 'Số lượng nhập', 'required|trim');
@@ -289,10 +305,11 @@ class Phieunhap extends Admin_Controller
                 redirect($url);
             }
         }
-        if ($this->input->post('confirm')){
-            $flag = $this->model_phieunhap->confirm($phieunhap_id);
+        if ($this->input->post('del')){
+            $flag = $this->model_phieunhap->del_hanghoa($this->input->post('del'));
             $this->session->set_flashdata('message_flashdata', $flag);
-            redirect('admin/phieunhap');
+            $url = 'admin/phieunhap/detail/'.$phieunhap_id;
+            redirect($url);
         }
         $this->render('admin/phieunhap/detail_view');
     }

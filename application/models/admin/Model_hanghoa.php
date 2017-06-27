@@ -24,10 +24,13 @@ class Model_hanghoa extends CI_Model
             ->get()->row_array();
     }
 
-    public function get_list_hanghoa(){
-        return $this->db->select('hanghoa_id, tenhanghoa')
-            ->from('hanghoa')
-            ->get()->result_array();
+    public function get_list_hanghoa($data = NULL){
+        $this->db->select('hanghoa_id, tenhanghoa')
+            ->from('hanghoa');
+        if (isset($data)&&count($data)){
+            $this->db->where_not_in('hanghoa_id',$data);
+        }
+        return    $this->db->get()->result_array();
     }
 
     public function add()

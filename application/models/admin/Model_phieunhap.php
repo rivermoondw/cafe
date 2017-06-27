@@ -29,7 +29,7 @@ class Model_phieunhap extends CI_Model
     }
 
     public function get_list_hanghoa($phieunhap_id){
-        return $this->db->select('tenhanghoa, soluongnhap, dongia')
+        return $this->db->select('ctphieunhap_id , tenhanghoa, soluongnhap, dongia, hanghoa.hanghoa_id')
             ->from('ctphieunhap')
             ->join('hanghoa', 'hanghoa.hanghoa_id = ctphieunhap.hanghoa_id')
             ->join('phieunhap', 'phieunhap.phieunhap_id = ctphieunhap.phieunhap_id')
@@ -37,20 +37,21 @@ class Model_phieunhap extends CI_Model
             ->get()->result_array();
     }
 
-    public function confirm($phieunhap_id){
-        $this->db->where('phieunhap_id', (int)$phieunhap_id)->update('phieunhap', array(
-            'trangthai' => 1
+    public function del_hanghoa($ctphieunhap_id){
+        $this->db->delete('ctphieunhap', array(
+            'ctphieunhap_id' => (int)$ctphieunhap_id
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
             return array(
                 'type' => 'success',
-                'message' => 'Cập nhật dữ liệu thành công'
+                'message' => 'Xóa dữ liệu thành công'
             );
         } else {
+            $this->db->trans_rollback();
             return array(
                 'type' => 'error',
-                'message' => 'Lỗi cập nhật dữ liệu'
+                'message' => 'Lỗi xóa dữ liệu'
             );
         }
     }
@@ -66,7 +67,8 @@ class Model_phieunhap extends CI_Model
         if ($flag > 0) {
             return array(
                 'type' => 'success',
-                'message' => 'Thêm hàng hóa thành công'
+                'message' => 'Thêm hàng hóa thành công',
+                'last_id' => $this->db->insert_id()
             );
         } else {
             return array(
@@ -84,8 +86,7 @@ class Model_phieunhap extends CI_Model
             'ngaynhap' => date('Y-m-d',strtotime($ngaynhap)),
             'nhacungcap_id' => $this->input->post('nhacungcap_id'),
             'maphieunhap' => $this->input->post('maphieunhap'),
-            'nhanvien_id' => $user->nhanvien_id,
-            'trangthai' => 0
+            'nhanvien_id' => $user->nhanvien_id
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
@@ -103,14 +104,18 @@ class Model_phieunhap extends CI_Model
 
     public function del($id)
     {
+        $this->db->trans_begin();
+        $this->db->delete('ctphieunhap', array('phieunhap_id' => (int)$id));
         $this->db->delete('phieunhap', array('phieunhap_id' => (int)$id));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
+            $this->db->trans_commit();
             return array(
                 'type' => 'success',
                 'message' => 'Xóa dữ liệu thành công'
             );
         } else {
+            $this->db->trans_rollback();
             return array(
                 'type' => 'error',
                 'message' => 'Lỗi xóa dữ liệu'
@@ -120,14 +125,18 @@ class Model_phieunhap extends CI_Model
 
     public function del_list($checkbox)
     {
+        $this->db->trans_begin();
+        $this->db->where_in('phieunhap_id', $checkbox)->delete('ctphieunhap');
         $this->db->where_in('phieunhap_id', $checkbox)->delete('phieunhap');
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
+            $this->db->trans_commit();
             return array(
                 'type' => 'success',
                 'message' => 'Đã xóa (' . count($checkbox) . ') dữ liệu'
             );
         } else {
+            $this->db->trans_rollback();
             return array(
                 'type' => 'error',
                 'message' => 'Lỗi xóa dữ liệu'

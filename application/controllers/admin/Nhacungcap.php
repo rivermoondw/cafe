@@ -9,6 +9,14 @@ class Nhacungcap extends Admin_Controller
         $this->load->model('admin/model_nhacungcap');
         $this->load->helper('form');
         $this->data['active_parent'] = 'nhacungcap';
+        $groups = array('admin','manager');
+        if (!$this->ion_auth->in_group($groups)){
+            $this->session->set_flashdata('message_flashdata', array(
+                'type' => 'error',
+                'message' => 'Bạn không có quyền truy cập vào trang này'
+            ));
+            redirect('admin/home');
+        }
     }
 
     public function index($page = 1)
@@ -98,7 +106,7 @@ class Nhacungcap extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/nhacungcap/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/nhacungcap/index/';
         $config['total_rows'] = $this->model_nhacungcap->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);

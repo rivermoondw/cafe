@@ -106,7 +106,7 @@ class Ban extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/ban/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/ban/index/';
         $config['total_rows'] = $this->model_ban->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
@@ -201,7 +201,7 @@ class Ban extends Admin_Controller
         $this->data['active_parent'] = 'status';
         $this->load->helper('form');
         $this->load->library('pagination');
-        $this->data['content_header'] = 'Trang chủ';
+        $this->data['content_header'] = 'Tình trạng bàn';
         $this->data['before_head'] = '
 <!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">
@@ -246,7 +246,7 @@ class Ban extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/pttk/admin/ban/index/';
+        $config['base_url'] = 'http://localhost:8080/cafe/admin/ban/index/';
         $config['total_rows'] = $this->model_ban->total();
         $config['per_page'] = 12;
         $this->pagination->initialize($config);

@@ -15,23 +15,46 @@ class Model_hoadon extends CI_Model
             ->from('hoadon')
             ->join('nhanvien', 'nhanvien.nhanvien_id = hoadon.nhanvien_id')
             ->limit($limit, $start)
+            ->order_by('trangthai', 'ASC')
             ->order_by('ngaylap', 'DESC')
             ->get()->result_array();
     }
 
-    public function get_list_douong()
+    public function get_list_douong($data = NULL)
     {
-        return $this->db->select('douong_id, douong, dongia')
-            ->from('douong')
-            ->get()->result_array();
+        $this->db->select('douong_id, douong, dongia')
+            ->from('douong');
+        if (isset($data)&&count($data)){
+            $this->db->where_not_in('douong_id',$data);
+        }
+        return    $this->db->get()->result_array();
     }
 
     public function get_douong($hoadon_id){
-        return $this->db->select('douong, soluong, dongia')
+        return $this->db->select('douong.douong_id, douong, soluong, dongia, id')
             ->from('cthoadon')
             ->join('douong', 'douong.douong_id = cthoadon.douong_id')
             ->where('hoadon_id', $hoadon_id)
             ->get()->result_array();
+    }
+
+    public function del_douong($id){
+        $this->db->delete('cthoadon', array(
+            'id' => (int)$id
+        ));
+        $flag = $this->db->affected_rows();
+        if ($flag > 0) {
+            return array(
+                'type' => 'success',
+                'message' => 'Xóa dữ liệu thành công'
+            );
+        } else {
+            $this->db->trans_rollback();
+            return array(
+                'type' => 'error',
+                'message' => 'Lỗi xóa dữ liệu'
+            );
+        }
     }
 
     public function get_hoadon($id)
@@ -63,18 +86,33 @@ class Model_hoadon extends CI_Model
         }
     }
 
-    public function thanhtoan($hoadon_id){
+    public function get_list_ban($hoadon_id){
+        return $this->db->select('ban_id')
+            ->from('hoadon_ban')
+            ->where('hoadon_id', $hoadon_id)
+            ->get()->result_array();
+    }
+
+    public function thanhtoan($hoadon_id, $data = NULL){
+        $this->db->trans_begin();
+        if (isset($data)&&count($data)!=0){
+            $this->db->where_in('ban_id', $data)->update('ban', array(
+                'trangthai' => 0
+            ));
+        }
         $this->db->where('hoadon_id', (int)$hoadon_id)->update('hoadon', array(
             'trangthai' => 1,
             'thanhtien' => $this->input->post('thanhtien')
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
+            $this->db->trans_commit();
             return array(
                 'type' => 'success',
                 'message' => 'Cập nhật dữ liệu thành công'
             );
         } else {
+            $this->db->trans_rollback();
             return array(
                 'type' => 'error',
                 'message' => 'Lỗi cập nhật dữ liệu'
