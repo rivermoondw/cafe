@@ -538,4 +538,10 @@ class Ion_auth
 		return $check_all;
 	}
 
+	public function get_avatar($group_id){
+	    return $this->db->select('avatar')
+            ->from('groups')
+            ->where('id', $group_id)
+            ->get()->row_array();
+    }
 }
