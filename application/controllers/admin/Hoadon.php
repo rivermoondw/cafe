@@ -1,22 +1,21 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Phieunhap extends Admin_Controller
+class Hoadon extends Admin_Controller
 {
     function __construct()
     {
         parent::__construct();
-        $this->data['page_title'] = 'Quản lý phiếu nhập';
-        $this->load->model('admin/model_phieunhap');
+        $this->data['page_title'] = 'Quản lý hóa đơn';
+        $this->load->model('admin/model_hoadon');
         $this->load->helper('form');
-        $this->data['active_parent'] = 'phieunhap';
+        $this->data['active_parent'] = 'hoadon';
     }
 
     public function index($page = 1)
     {
-        $this->load->helper('date');
         $this->load->library('pagination');
-        $this->data['active'] = 'phieunhap';
-        $this->data['content_header'] = 'Danh sách phiếu nhập';
+        $this->data['active'] = 'hoadon';
+        $this->data['content_header'] = 'Danh sách hóa đơn';
         $this->data['before_head'] = '<!-- DataTables -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/datatables/dataTables.bootstrap.css">
   <!-- iCheck -->
@@ -66,16 +65,16 @@ class Phieunhap extends Admin_Controller
         if ($this->input->post('btn-delete')){
             $checkbox = $this->input->post('checkbox');
             if (is_array($checkbox)){
-                $flag = $this->model_phieunhap->del_list($checkbox);
+                $flag = $this->model_hoadon->del_list($checkbox);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/phieunhap');
+                redirect('admin/hoadon');
             }
             else{
                 $this->session->set_flashdata('message_flashdata', array(
                     'type' => 'error',
                     'message' => 'Bạn phải chọn đối tượng'
                 ));
-                redirect('admin/phieunhap');
+                redirect('admin/hoadon');
             }
         }
 
@@ -99,8 +98,8 @@ class Phieunhap extends Admin_Controller
         $config['num_tag_close'] = '</li>';
         $config['num_links'] = 2;
         $config['use_page_numbers'] = TRUE;
-        $config['base_url'] = 'http://localhost:8080/qlks/admin/phieunhap/index/';
-        $config['total_rows'] = $this->model_phieunhap->total();
+        $config['base_url'] = 'http://localhost:8080/pttk/admin/hoadon/index/';
+        $config['total_rows'] = $this->model_hoadon->total();
         $config['per_page'] = 10;
         $this->pagination->initialize($config);
         $this->data['pagination'] = $this->pagination->create_links();
@@ -109,141 +108,104 @@ class Phieunhap extends Admin_Controller
         $page = ($page > $total_page)?$total_page:$page;
         $page = ($page < 1)?1:$page;
         $page = $page - 1;
-        $this->data['list_phieunhap'] = $this->model_phieunhap->get_list(($page*$config['per_page']), $config['per_page']);
-        $this->render('admin/phieunhap/list_view');
+        $this->data['list_hoadon'] = $this->model_hoadon->get_list(($page*$config['per_page']), $config['per_page']);
+        $this->render('admin/hoadon/list_view');
     }
 
     public function add()
     {
-        $this->load->helper('date');
-        $this->data['page_title'] = 'Thêm phiếu nhập';
-        $this->data['active'] = 'them_phieunhap';
-        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
-  <!-- Select2 -->
+        $this->load->helper('string');
+        $this->data['page_title'] = 'Thêm hóa đơn';
+        $this->data['active'] = 'them_hoadon';
+        $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
-        $this->data['before_body'] = '<!-- InputMask -->
-<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
-<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<!-- Select2 -->
+        $this->data['before_body'] = '<!-- Select2 -->
 <script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
 <script>
   $(function () {
     //Initialize Select2 Elements
-    $(".select2").select2();
-    //Datemask dd/mm/yyyy
-    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    //Money Euro
-    $("[data-mask]").inputmask();
-    //Flat red color scheme for iCheck
-    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
-      checkboxClass: \'icheckbox_flat-green\',
-      radioClass: \'iradio_flat-green\'
+    $(".select2").select2({
+        minimumResultsForSearch: Infinity
     });
+    $("#ban").attr("disabled", true);
+    $("#kieudat").change(function(){
+            if ($(this).val()==0){
+                $("#ban").attr("disabled", true);
+            }
+            else{
+                $("#ban").attr("disabled", false);
+            }
+        });
   });
 </script>';
-        $this->data['content_header'] = 'Thêm phiếu nhập';
-        $this->load->model('admin/model_nhacungcap');
-        $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
+        $this->data['list_ban'] = $this->model_hoadon->get_ban_trong();
+        $this->data['content_header'] = 'Thêm hóa đơn';
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('maphieunhap', 'Mã phiếu nhập', 'required|trim|is_unique[phieunhap.maphieunhap]',array(
-                'is_unique' => '%s đã tồn tại'
-            ));
-            $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
-            $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
-            if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_phieunhap->add();
-                $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/phieunhap');
-            }
+            $flag = $this->model_hoadon->add();
+            $this->session->set_flashdata('message_flashdata', $flag);
+            redirect('admin/hoadon');
         }
-        $this->render('admin/phieunhap/add_view');
+        $this->render('admin/hoadon/add_view');
     }
 
     public function del($id = 0)
     {
-        $phieunhap = $this->model_phieunhap->get_phieunhap($id);
-        if (!isset($phieunhap) || count($phieunhap) == 0){
+        $hoadon = $this->model_hoadon->get_hoadon($id);
+        if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Phiếu nhập không tồn tại'
+                'message' => 'Bàn không tồn tại'
             ));
-            redirect('admin/phieunhap');
+            redirect('admin/hoadon');
         }
-        $flag = $this->model_phieunhap->del($phieunhap['phieunhap_id']);
+        $flag = $this->model_hoadon->del($hoadon['hoadon_id']);
         $this->session->set_flashdata('message_flashdata', $flag);
-        redirect('admin/phieunhap');
+        redirect('admin/hoadon');
     }
 
     public function edit($id = 0)
     {
-        $phieunhap = $this->model_phieunhap->get_phieunhap($id);
-        if (!isset($phieunhap) || count($phieunhap) == 0){
+        $hoadon = $this->model_hoadon->get_hoadon($id);
+        if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Phiếu nhập không tồn tại'
+                'message' => 'Bàn không tồn tại'
             ));
-            redirect('admin/phieunhap');
+            redirect('admin/hoadon');
         }
-        $this->load->helper('date');
-        $this->data['page_title'] = 'Sửa thông tin phiếu nhập';
-        $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
-  <!-- Select2 -->
+        $this->data['page_title'] = 'Sửa thông tin hóa đơn';
+        $this->data['content_header'] = 'Sửa thông tin hóa đơn';
+        $this->data['before_head'] = '<!-- Select2 -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/select2/select2.min.css">';
-        $this->data['before_body'] = '<!-- InputMask -->
-<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.js"></script>
-<script src="' . base_url() . 'assets/admin/plugins/input-mask/jquery.inputmask.date.extensions.js"></script>
-<!-- Select2 -->
-<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>
-<!-- iCheck 1.0.1 -->
-<script src="' . base_url() . 'assets/admin/plugins/iCheck/icheck.min.js"></script>
-<script>
-  $(function () {
-    //Initialize Select2 Elements
-    $(".select2").select2();
-    //Datemask dd/mm/yyyy
-    $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-    //Money Euro
-    $("[data-mask]").inputmask();
-    //Flat red color scheme for iCheck
-    $(\'input[type="checkbox"].flat-red, input[type="radio"].flat-red\').iCheck({
-      checkboxClass: \'icheckbox_flat-green\',
-      radioClass: \'iradio_flat-green\'
-    });
-  });
-</script>';
-        $this->data['phieunhap'] = $phieunhap;
-        $this->load->model('admin/model_nhacungcap');
-        $this->data['nhacungcap'] = $this->model_nhacungcap->get_ncc();
+        $this->data['before_body'] = '<!-- Select2 -->
+<script src="' . base_url() . 'assets/admin/plugins/select2/select2.full.min.js"></script>';
+        $this->data['hoadon'] = $hoadon;
         $this->load->library('form_validation');
         if ($this->input->post('submit')) {
-            $this->form_validation->set_rules('maphieunhap', 'Mã phiếu nhập', 'required|trim|is_unique[phieunhap.maphieunhap]',array(
-                'is_unique' => '%s đã tồn tại'
-            ));
-            $this->form_validation->set_rules('ngaynhap', 'Ngày nhập', 'required|trim');
+            $this->form_validation->set_rules('tenhoadon', 'Tên hóa đơn', 'required|trim');
+            $this->form_validation->set_rules('socho', 'Số chỗ', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE) {
-                $flag = $this->model_phieunhap->edit($phieunhap['phieunhap_id']);
+                $flag = $this->model_hoadon->edit($hoadon['hoadon_id']);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                redirect('admin/phieunhap');
+                redirect('admin/hoadon');
             }
         }
-        $this->render('admin/phieunhap/edit_view');
+        $this->render('admin/hoadon/edit_view');
     }
 
-    public function detail($phieunhap_id){
-        $phieunhap = $this->model_phieunhap->get_phieunhap($phieunhap_id);
-        if (!isset($phieunhap) || count($phieunhap) == 0){
+    public function detail($hoadon_id){
+        $hoadon = $this->model_hoadon->get_hoadon($hoadon_id);
+        if (!isset($hoadon) || count($hoadon) == 0){
             $this->session->set_flashdata('message_flashdata', array(
                 'type' => 'error',
-                'message' => 'Phiếu nhập không tồn tại'
+                'message' => 'Bàn không tồn tại'
             ));
-            redirect('admin/phieunhap');
+            redirect('admin/hoadon');
         }
+        $this->data['page_title'] = 'Chi tiết hóa đơn';
+        $this->data['content_header'] = 'Chi tiết hóa đơn';
         $this->data['before_head'] = '<!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="' . base_url() . 'assets/admin/plugins/iCheck/all.css">
   <!-- Select2 -->
@@ -271,29 +233,25 @@ class Phieunhap extends Admin_Controller
   });
 </script>';
         $this->load->helper('date');
-        $this->data['page_title'] = 'Chi tiết phiếu nhập';
-        $this->data['content_header'] = 'Chi tiết phiếu nhập';
-        $this->data['phieunhap'] = $phieunhap;
-        $this->data['list_hanghoa'] = $this->model_phieunhap->get_list_hanghoa($phieunhap_id);
-        $this->load->model('admin/model_hanghoa');
-        $this->data['hanghoa'] = $this->model_hanghoa->get_list_hanghoa();
+        $this->data['hoadon'] = $hoadon;
+        $this->data['list_douong'] = $this->model_hoadon->get_douong($hoadon_id);
+        $this->data['douong'] = $this->model_hoadon->get_list_douong();
         $this->load->library('form_validation');
         if ($this->input->post('submit')){
-            $this->form_validation->set_rules('soluongnhap', 'Số lượng nhập', 'required|trim');
-            $this->form_validation->set_rules('dongia', 'Đơn giá', 'required|trim');
+            $this->form_validation->set_rules('soluong', 'Số lượng nhập', 'required|trim');
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE){
-                $flag = $this->model_phieunhap->add_hanghoa($phieunhap_id);
+                $flag = $this->model_hoadon->add_douong($hoadon_id);
                 $this->session->set_flashdata('message_flashdata', $flag);
-                $url = 'admin/phieunhap/detail/'.$phieunhap_id;
+                $url = 'admin/hoadon/detail/'.$hoadon_id;
                 redirect($url);
             }
         }
-        if ($this->input->post('confirm')){
-            $flag = $this->model_phieunhap->confirm($phieunhap_id);
+        if ($this->input->post('thanhtoan')){
+            $flag = $this->model_hoadon->thanhtoan($hoadon_id);
             $this->session->set_flashdata('message_flashdata', $flag);
-            redirect('admin/phieunhap');
+            redirect('admin/hoadon');
         }
-        $this->render('admin/phieunhap/detail_view');
+        $this->render('admin/hoadon/detail_view');
     }
 }

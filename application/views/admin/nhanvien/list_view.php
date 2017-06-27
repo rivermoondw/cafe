@@ -1,6 +1,3 @@
-<?php
-print_r($list_taikhoan);
-?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box box-primary">
@@ -46,10 +43,10 @@ print_r($list_taikhoan);
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['nhanvien_id']; ?>"></td>
                         <td><?php echo htmlspecialchars($val['manhanvien']); ?></td>
                         <td><?php echo htmlspecialchars($val['hoten']); ?></td>
-                        <td><?php echo nice_date(htmlspecialchars($val['ngaysinh']),'d-m-Y'); ?></td>
+                        <td><?php echo nice_date(htmlspecialchars($val['ngaysinh']),'d/m/Y'); ?></td>
                         <td><?php echo htmlspecialchars($val['gioitinh']); ?></td>
                         <td><?php echo htmlspecialchars($val['diachi']); ?></td>
-                        <td><?php echo nice_date(htmlspecialchars($val['ngaylamviec']),'d-m-Y'); ?></td>
+                        <td><?php echo nice_date(htmlspecialchars($val['ngaylamviec']),'d/m/Y'); ?></td>
                         <td>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/edit/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Sửa</button></a>
                             <a href="<?php echo base_url(); ?>admin/nhanvien/del/<?php echo $val['nhanvien_id']; ?>"><button type="button" class="btn btn-default btn-xs del-btn"><i class="fa fa-times"></i> Xóa</button></a>

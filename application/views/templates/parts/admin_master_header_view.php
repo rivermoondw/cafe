@@ -56,22 +56,22 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="<?php echo base_url(); ?>assets/admin/dist/img/Screenshot_12.png" class="img-circle"
+                    <img src="<?php echo base_url(); ?>assets/admin/img/<?php echo $avatar['avatar']; ?>.jpg" class="img-circle"
                          alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Nhân viên</p>
-                    <p>Yowzah</p>
+                    <p><?php echo $user_groups[0]->description; ?></p>
+                    <p><?php echo $nhanvien['hoten'];?></p>
                 </div>
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header"><h5 style="color: #fff">Menu chính</h5></li>
-                <li class="<?php echo (isset($active_parent) && $active_parent == 'trangchu') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/home"><span>Trang chủ</span></a></li>
                 <?php
                 $group = array('seller','admin');
                 if ($this->ion_auth->in_group($group)){
                 ?>
+                <li class="<?php echo (isset($active_parent) && $active_parent == 'tinhtrangban') ? 'active' : ''; ?>"><a href="<?php echo base_url(); ?>admin/ban/status"><span>Tình trạng bàn</span></a></li>
                 <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'ban') ? 'active' : ''; ?>">
                     <a href="#">
                         <span>Quản lý bàn</span>
@@ -104,6 +104,23 @@
                                     href="<?php echo base_url(); ?>admin/douong/add"><i
                                         class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_douong') ? 'text-aqua' : ''; ?>"></i>Thêm đồ uống</a>
                         </li>
+                    </ul>
+                </li>
+                <li class="treeview <?php echo (isset($active_parent) && $active_parent == 'hoadon') ? 'active' : ''; ?>">
+                    <a href="#">
+                        <span>Hóa đơn</span>
+                        <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="<?php echo (isset($active) && $active == 'hoadon') ? 'active' : ''; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/hoadon"><i
+                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'hoadon') ? 'text-aqua' : ''; ?>"></i>Danh sách hóa đơn</a>
+                        </li>
+                        <li class="<?php echo (isset($active) && $active == 'them_hoadon') ? 'active' : ''; ?>"><a
+                                    href="<?php echo base_url(); ?>admin/hoadon/add"><i
+                                        class="fa fa-circle-o <?php echo (isset($active) && $active == 'them_hoadon') ? 'text-aqua' : ''; ?>"></i>Thêm hóa đơn</a></li>
                     </ul>
                 </li>
                 <?php

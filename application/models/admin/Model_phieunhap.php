@@ -9,9 +9,10 @@ class Model_phieunhap extends CI_Model
 
     public function get_list($start, $limit)
     {
-        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap, maphieunhap, nhacungcap.nhacungcap_id')
+        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap, maphieunhap, nhacungcap.nhacungcap_id, hoten')
             ->from('phieunhap')
             ->join('nhacungcap', 'nhacungcap.nhacungcap_id = phieunhap.nhacungcap_id')
+            ->join('nhanvien', 'nhanvien.nhanvien_id = phieunhap.nhanvien_id')
             ->limit($limit, $start)
             ->order_by('ngaynhap', 'DESC')
             ->get()->result_array();
@@ -19,9 +20,10 @@ class Model_phieunhap extends CI_Model
 
     public function get_phieunhap($id)
     {
-        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap.nhacungcap_id, maphieunhap, nhacungcap')
+        return $this->db->select('phieunhap_id, ngaynhap, nhacungcap.nhacungcap_id, maphieunhap, nhacungcap, hoten')
             ->from('phieunhap')
             ->join('nhacungcap', 'nhacungcap.nhacungcap_id = phieunhap.nhacungcap_id')
+            ->join('nhanvien', 'nhanvien.nhanvien_id = phieunhap.nhanvien_id')
             ->where('phieunhap_id', (int)$id)
             ->get()->row_array();
     }
@@ -76,11 +78,13 @@ class Model_phieunhap extends CI_Model
 
     public function add()
     {
+        $user = $this->ion_auth->user()->row();
         $ngaynhap = str_replace('/', '-', $this->input->post('ngaynhap'));
         $this->db->insert('phieunhap', array(
             'ngaynhap' => date('Y-m-d',strtotime($ngaynhap)),
             'nhacungcap_id' => $this->input->post('nhacungcap_id'),
             'maphieunhap' => $this->input->post('maphieunhap'),
+            'nhanvien_id' => $user->nhanvien_id,
             'trangthai' => 0
         ));
         $flag = $this->db->affected_rows();

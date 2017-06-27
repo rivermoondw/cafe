@@ -21,7 +21,7 @@ class User extends MY_Controller
             $this->form_validation->set_error_delimiters('<div class="text-red"><i class="fa fa-times-circle-o"></i> <b>', '</b></div>');
             if ($this->form_validation->run() === TRUE){
                 if ($this->ion_auth->login($this->input->post('username'), $this->input->post('password'))){
-                    redirect('admin/ban');
+                    redirect('admin/home');
                 }
                 else{
                     $flag = array(

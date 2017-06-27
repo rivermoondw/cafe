@@ -15,7 +15,7 @@
                     }
                     else{
                         ?>
-                        <div class="alert alert-danger alert-dismissible"><i class="icon fa fa-phieunhap"></i> <?php echo $message_flashdata['message']; ?></div>
+                        <div class="alert alert-danger alert-dismissible"><i class="icon fa fa-hoadon"></i> <?php echo $message_flashdata['message']; ?></div>
                         <?php
                     }
                 }
@@ -23,18 +23,18 @@
                 <table class="table table-condensed">
                     <thead>
                     <tr>
-                        <th>Mã phiếu nhập</th>
-                        <th>Ngày nhập</th>
-                        <th>Nhân viên thực hiện</th>
-                        <th>Nhà cung cấp</th>
+                        <th>Mã hóa đơn</th>
+                        <th>Ngày lập</th>
+                        <th>Nhân viên</th>
+                        <th>Trạng thái</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td><?php echo $phieunhap['maphieunhap']; ?></td>
-                        <td><?php echo nice_date($phieunhap['ngaynhap'], 'd/m/Y'); ?></td>
-                        <td><?php echo $phieunhap['hoten']; ?></td>
-                        <td><?php echo $phieunhap['nhacungcap']; ?></td>
+                        <td><?php echo $hoadon['mahoadon']; ?></td>
+                        <td><?php echo nice_date($hoadon['ngaylap'], 'd/m/Y H:i:s'); ?></td>
+                        <td><?php echo $hoadon['hoten']; ?></td>
+                        <td><?php echo ($hoadon['trangthai']==0)?'Chưa thanh toán':'Đã thanh toán'; ?></td>
                     </tr>
                     </tbody>
                 </table>
@@ -50,7 +50,7 @@
                 $att = array('role' => 'form');
                 echo form_open('', $att);
                 ?>
-                <input type="submit" name="confirm" value="Xác nhận phiếu nhập" class="btn btn-success">
+                <input type="submit" name="thanhtoan" value="Thanh toán" class="btn btn-success">
             </div>
         </div>
     </div>
@@ -59,13 +59,13 @@
     <div class="col-md-6">
         <div class="box box-primary box-solid">
             <div class="box-header">
-                <h3 class="box-title">Chi tiết phiếu nhập</h3>
+                <h3 class="box-title">Chi tiết hóa đơn</h3>
             </div>
             <div class="box-body">
                 <table class="table table-condensed">
                     <thead>
                     <tr>
-                        <th>Hàng hóa</th>
+                        <th>Đồ uống</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
                     </tr>
@@ -73,13 +73,13 @@
                     <tbody>
                     <?php
                     $tongtien = 0;
-                    if (isset($list_hanghoa) && count($list_hanghoa)){
-                        foreach ($list_hanghoa as $key => $val){
-                            $tongtien += $val['dongia']*$val['soluongnhap'];
+                    if (isset($list_douong) && count($list_douong)){
+                        foreach ($list_douong as $key => $val){
+                            $tongtien += $val['dongia']*$val['soluong'];
                             ?>
                             <tr>
-                                <td><?php echo $val['tenhanghoa']; ?></td>
-                                <td><?php echo $val['soluongnhap']; ?></td>
+                                <td><?php echo $val['douong']; ?></td>
+                                <td><?php echo $val['soluong']; ?></td>
                                 <td><?php echo $val['dongia']; ?></td>
                             </tr>
                             <?php
@@ -103,36 +103,31 @@
     <div class="col-md-6">
         <div class="box box-primary box-solid">
             <div class="box-header">
-                <h3 class="box-title">Thêm hàng hóa</h3>
+                <h3 class="box-title">Thêm đồ uống</h3>
                 <?php echo validation_errors(); ?>
             </div>
             <div class="box-body">
                 <div class="row">
-                    <div class="form-group col-xs-4">
-                        <label>Hàng hóa</label>
-                        <select class="form-control select2" name="hanghoa_id" style="width: 100%;">
+                    <div class="form-group col-xs-8">
+                        <label>Đồ uống</label>
+                        <select class="form-control select2" name="douong_id" style="width: 100%;">
                             <?php
-                            foreach ($hanghoa as $key => $val) {
-                                echo '<option value="' . $val['hanghoa_id'] . '">' . $val['tenhanghoa'] . '</option>';
+                            foreach ($douong as $key => $val) {
+                                echo '<option value="' . $val['douong_id'] . '">' . $val['douong'] . '</option>';
                             }
                             ?>
                         </select>
                     </div>
                     <div class="form-group col-xs-4">
-                        <label>Số lượng nhập</label>
-                        <input type="text" class="form-control" placeholder="Nhập số lượng nhập" name="soluongnhap"
-                               value="<?php echo set_value('soluongnhap', '1'); ?>">
+                        <label>Số lượng</label>
+                        <input type="text" class="form-control" placeholder="Nhập số lượng" name="soluong"
+                               value="<?php echo set_value('soluong', '1'); ?>">
                     </div>
-                    <div class="form-group col-xs-4">
-                        <label>Đơn giá</label>
-                        <input type="text" class="form-control" placeholder="Nhập đơn giá" name="dongia"
-                               value="<?php echo set_value('dongia', '0'); ?>">
-                    </div>
+                    <input type="text" hidden name="thanhtien" value="<?php echo $tongtien;?>">
                 </div>
             </div>
             <div class="box-footer">
-                <input type="submit" name="submit" value="Thêm vào phiếu nhập" class="btn btn-primary">
-                <a href="<?php echo base_url(); ?>admin/hanghoa/add?redirect=<?php echo base64_encode(uri_string()); ?>"><button type="button" class="btn btn-primary btn-default" style="color:#fff"><i class="fa fa-plus"></i> Thêm mặt hàng mới</button></a>
+                <input type="submit" name="submit" value="Thêm vào hóa đơn" class="btn btn-primary">
             </div>
             <?php echo form_close(); ?>
         </div>

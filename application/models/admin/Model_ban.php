@@ -9,7 +9,7 @@ class Model_ban extends CI_Model
 
     public function get_list($start, $limit)
     {
-        return $this->db->select('ban_id, tenban, socho')
+        return $this->db->select('ban_id, tenban, socho, trangthai')
             ->from('ban')
             ->limit($limit, $start)
             ->order_by('tenban', 'ASC')
@@ -18,7 +18,7 @@ class Model_ban extends CI_Model
 
     public function get_ban($id)
     {
-        return $this->db->select('ban_id, tenban, socho')
+        return $this->db->select('ban_id, tenban, socho, trangthai')
             ->from('ban')
             ->where('ban_id', (int)$id)
             ->get()->row_array();
@@ -28,7 +28,8 @@ class Model_ban extends CI_Model
     {
         $this->db->insert('ban', array(
             'tenban' => $this->input->post('tenban'),
-            'socho' => $this->input->post('socho')
+            'socho' => $this->input->post('socho'),
+            'trangthai' => 0
         ));
         $flag = $this->db->affected_rows();
         if ($flag > 0) {
@@ -96,6 +97,16 @@ class Model_ban extends CI_Model
                 'message' => 'Lỗi cập nhật dữ liệu'
             );
         }
+    }
+
+    public function get_hoadon($ban_id){
+        return $this->db->select('hoadon.hoadon_id')
+            ->from('hoadon_ban')
+            ->join('ban', 'ban.ban_id = hoadon_ban.ban_id')
+            ->join('hoadon', 'hoadon.hoadon_id = hoadon_ban.hoadon_id')
+            ->where('ban.trangthai', 1)
+            ->where('hoadon.trangthai', 0)
+            ->get()->row_array();
     }
 
     public function total()
