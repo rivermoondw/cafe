@@ -34,6 +34,15 @@ class Admin_Controller extends MY_Controller
             redirect('admin/user/login');
         }
         $this->data['page_title'] = 'Trang chủ';
+
+        $this->load->library('ion_auth');
+        $user = $this->ion_auth->user()->row();
+        $this->data['user'] = $user;
+        $this->load->model('admin/model_nhanvien');
+        $this->data['nhanvien'] = $this->model_nhanvien->get_nhanvien($user->nhanvien_id);
+        $user_groups = $this->ion_auth->get_users_groups()->result();
+        $this->data['user_groups'] = $user_groups;
+        $this->data['avatar'] = $this->ion_auth->get_avatar($user_groups[0]->id);
     }
 
     protected function render($the_view = NULL, $template = 'admin_master')
