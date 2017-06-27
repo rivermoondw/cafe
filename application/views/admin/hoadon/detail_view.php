@@ -42,6 +42,9 @@
         </div>
     </div>
 </div>
+<?php
+if ($hoadon['trangthai']==0){
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
@@ -55,6 +58,9 @@
         </div>
     </div>
 </div>
+<?php
+}
+?>
 <div class="row">
     <div class="col-md-6">
         <div class="box box-primary box-solid">
@@ -68,6 +74,13 @@
                         <th>Đồ uống</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
+                        <?php
+                        if ($hoadon['trangthai']==0){
+                        ?>
+                        <th></th>
+                        <?php
+                        }
+                        ?>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,6 +94,13 @@
                                 <td><?php echo $val['douong']; ?></td>
                                 <td><?php echo $val['soluong']; ?></td>
                                 <td><?php echo $val['dongia']; ?></td>
+                                <?php
+                                if ($hoadon['trangthai']==0){
+                                ?>
+                                <td style="width:10px"><button type="submit" class="btn btn-danger btn-xs" style="color:#fff" name="del" value="<?php echo $val['id']; ?>"><i class="fa fa-close"></i></button></td>
+                                <?php
+                                }
+                                ?>
                             </tr>
                             <?php
                         }
@@ -100,6 +120,9 @@
             </div>
         </div>
     </div>
+    <?php
+    if ($hoadon['trangthai']==0){
+    ?>
     <div class="col-md-6">
         <div class="box box-primary box-solid">
             <div class="box-header">
@@ -132,4 +155,7 @@
             <?php echo form_close(); ?>
         </div>
     </div>
+    <?php
+    }
+    ?>
 </div>

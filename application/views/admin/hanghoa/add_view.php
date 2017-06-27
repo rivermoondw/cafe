@@ -22,8 +22,10 @@
                 <div class="form-group <?php echo (form_error('dvt')) ? 'has-error' : ''; ?>">
                     <label>Đơn vị tính</label>
                     <select class="form-control select2" name="dvt" style="width: 100%;">
-                        <option value="kg">Kg</option>
-                        <option value="chiếc">Chiếc</option>
+                        <option value="kg">kg</option>
+                        <option value="chiếc">chiếc</option>
+                        <option value="lít">lít</option>
+                        <option value="khác">khác</option>
                     </select>
                 </div>
             </div>

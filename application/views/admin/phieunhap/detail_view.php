@@ -43,31 +43,23 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-        <div class="box box-solid">
-            <div class="box-body">
-                <?php
-                $att = array('role' => 'form');
-                echo form_open('', $att);
-                ?>
-                <input type="submit" name="confirm" value="Xác nhận phiếu nhập" class="btn btn-success">
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
     <div class="col-md-6">
         <div class="box box-primary box-solid">
             <div class="box-header">
                 <h3 class="box-title">Chi tiết phiếu nhập</h3>
             </div>
             <div class="box-body">
+                <?php
+                $att = array('role' => 'form');
+                echo form_open('', $att);
+                ?>
                 <table class="table table-condensed">
                     <thead>
                     <tr>
                         <th>Hàng hóa</th>
                         <th>Số lượng</th>
                         <th>Đơn giá</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -81,6 +73,7 @@
                                 <td><?php echo $val['tenhanghoa']; ?></td>
                                 <td><?php echo $val['soluongnhap']; ?></td>
                                 <td><?php echo $val['dongia']; ?></td>
+                                <td style="width:10px"><button type="submit" class="btn btn-danger btn-xs" style="color:#fff" name="del" value="<?php echo $val['ctphieunhap_id']; ?>"><i class="fa fa-close"></i></button></td>
                             </tr>
                             <?php
                         }

@@ -25,7 +25,7 @@
                 if ($val['trangthai'] == 0){
                 ?>
                 <div class="info-box bg-aqua">
-                    <a href="<?php echo base_url().'admin/ban/detail/'.$val['ban_id']; ?>" class="custom"><span class="info-box-icon"><i class="fa fa-home"></i></span></a>
+                    <span class="info-box-icon"><i class="fa fa-home"></i></span>
                 <?php
                 }
                 else if ($val['trangthai'] == 1){
@@ -37,6 +37,7 @@
                 ?>
                     <div class="info-box-content">
                         <span class="info-box-number"><?php echo $val['tenban']; ?></span>
+                        <span class="info-box-text">Số chỗ <?php echo $val['socho']; ?></span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>

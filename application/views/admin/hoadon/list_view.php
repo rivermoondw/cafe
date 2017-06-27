@@ -29,6 +29,7 @@
                         <th>Ngày lập</th>
                         <th>Nhân viên</th>
                         <th>Trạng thái</th>
+                        <th>Thành tiền</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -38,10 +39,11 @@
                     ?>
                     <tr>
                         <td><input type="checkbox" name="checkbox[]" value="<?php echo $val['hoadon_id']; ?>"></td>
-                        <td><?php echo htmlspecialchars($val['mahoadon']); ?></td>
-                        <td><?php echo nice_date(htmlspecialchars($val['ngaylap']),'d/m/Y H:i:s'); ?></td>
-                        <td><?php echo htmlspecialchars($val['hoten']); ?></td>
-                        <td><?php echo ($val['trangthai']==0)?'Chưa thanh toán':'Đã thanh toán'; ?></td>
+                        <td><a href="<?php echo base_url() . 'admin/hoadon/detail/' . $val['hoadon_id']; ?>" style="color: #333"><?php echo htmlspecialchars($val['mahoadon']); ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/hoadon/detail/' . $val['hoadon_id']; ?>" style="color: #333"><?php echo nice_date(htmlspecialchars($val['ngaylap']),'d/m/Y H:i:s'); ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/hoadon/detail/' . $val['hoadon_id']; ?>" style="color: #333"><?php echo htmlspecialchars($val['hoten']); ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/hoadon/detail/' . $val['hoadon_id']; ?>" style="color: #333"><?php echo ($val['trangthai']==0)?'Chưa thanh toán':'Đã thanh toán'; ?></a></td>
+                        <td><a href="<?php echo base_url() . 'admin/hoadon/detail/' . $val['hoadon_id']; ?>" style="color: #333"><?php echo $val['thanhtien']; ?></a></td>
                     </tr>
                     <?php
                         }
