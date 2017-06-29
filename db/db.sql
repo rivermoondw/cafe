@@ -26,9 +26,11 @@ CREATE TABLE `ban` (
   `socho` smallint(6) DEFAULT NULL,
   `trangthai` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`ban_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ban` */
+
+insert  into `ban`(`ban_id`,`tenban`,`socho`,`trangthai`) values (1,'Bàn số 1',4,0),(2,'Bàn số 2',6,0),(3,'Bàn số 3',4,0);
 
 /*Table structure for table `cthoadon` */
 
@@ -42,9 +44,11 @@ CREATE TABLE `cthoadon` (
   PRIMARY KEY (`id`),
   KEY `hoadon_id` (`hoadon_id`),
   KEY `douong_id` (`douong_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `cthoadon` */
+
+insert  into `cthoadon`(`id`,`hoadon_id`,`douong_id`,`soluong`) values (1,2,1,2),(2,3,1,4);
 
 /*Table structure for table `ctphieunhap` */
 
@@ -59,9 +63,11 @@ CREATE TABLE `ctphieunhap` (
   PRIMARY KEY (`ctphieunhap_id`),
   KEY `phieunhap_id` (`phieunhap_id`),
   KEY `hanghoa_id` (`hanghoa_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ctphieunhap` */
+
+insert  into `ctphieunhap`(`ctphieunhap_id`,`phieunhap_id`,`hanghoa_id`,`soluongnhap`,`dongia`) values (1,2,1,1,10000),(3,3,2,2,20000),(4,3,1,10,10000);
 
 /*Table structure for table `douong` */
 
@@ -72,9 +78,11 @@ CREATE TABLE `douong` (
   `douong` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `dongia` int(11) DEFAULT NULL,
   PRIMARY KEY (`douong_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `douong` */
+
+insert  into `douong`(`douong_id`,`douong`,`dongia`) values (1,'Cafe đá',25000);
 
 /*Table structure for table `groups` */
 
@@ -101,9 +109,11 @@ CREATE TABLE `hanghoa` (
   `tenhanghoa` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `dvt` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`hanghoa_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `hanghoa` */
+
+insert  into `hanghoa`(`hanghoa_id`,`tenhanghoa`,`dvt`) values (1,'Đường','kg'),(2,'Sữa','lít');
 
 /*Table structure for table `hoadon` */
 
@@ -118,9 +128,11 @@ CREATE TABLE `hoadon` (
   `trangthai` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`hoadon_id`),
   KEY `nhanvien_id` (`nhanvien_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `hoadon` */
+
+insert  into `hoadon`(`hoadon_id`,`mahoadon`,`ngaylap`,`nhanvien_id`,`thanhtien`,`trangthai`) values (1,'HD-280617040539','2017-06-28 04:05:39',2,0,1),(2,'HD-280617061800','2017-06-28 06:18:00',2,50000,1),(3,'HD-280617112657','2017-06-28 11:26:57',2,100000,1);
 
 /*Table structure for table `hoadon_ban` */
 
@@ -133,9 +145,11 @@ CREATE TABLE `hoadon_ban` (
   PRIMARY KEY (`id`),
   KEY `hoadon_id` (`hoadon_id`),
   KEY `ban_id` (`ban_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `hoadon_ban` */
+
+insert  into `hoadon_ban`(`id`,`hoadon_id`,`ban_id`) values (1,2,1),(2,2,2),(3,3,1),(4,3,2);
 
 /*Table structure for table `login_attempts` */
 
@@ -161,9 +175,11 @@ CREATE TABLE `nhacungcap` (
   `diachi` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
   `sdt` varchar(13) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`nhacungcap_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `nhacungcap` */
+
+insert  into `nhacungcap`(`nhacungcap_id`,`nhacungcap`,`diachi`,`sdt`) values (1,'Vin Mart','Đống Đa, Hà Nội','012472347/');
 
 /*Table structure for table `nhanvien` */
 
@@ -179,9 +195,11 @@ CREATE TABLE `nhanvien` (
   `ngaylamviec` date DEFAULT NULL,
   PRIMARY KEY (`nhanvien_id`),
   UNIQUE KEY `manhanvien` (`manhanvien`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `nhanvien` */
+
+insert  into `nhanvien`(`nhanvien_id`,`manhanvien`,`hoten`,`ngaysinh`,`gioitinh`,`diachi`,`ngaylamviec`) values (1,'NV01','Hoàng Vũ Lộc','1996-02-27','Nam','Hải Phòng','2017-06-21'),(2,'NV02','Mai thị Ánh Hồng','1996-09-19','Nam','Thanh Hóa','2017-05-23'),(3,'ADM','Admin',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `phieunhap` */
 
@@ -198,9 +216,11 @@ CREATE TABLE `phieunhap` (
   UNIQUE KEY `maphieunhap` (`maphieunhap`),
   KEY `nhacungcap_id` (`nhacungcap_id`),
   KEY `nhanvien_id` (`nhanvien_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `phieunhap` */
+
+insert  into `phieunhap`(`phieunhap_id`,`maphieunhap`,`ngaynhap`,`nhacungcap_id`,`nhanvien_id`,`tongchi`) values (1,'PN01','2017-06-20',NULL,1,NULL),(2,'PN02','2017-06-20',1,1,NULL),(3,'PN04','2017-06-28',1,1,NULL);
 
 /*Table structure for table `users` */
 
@@ -226,7 +246,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`ip_address`,`username`,`password`,`salt`,`email`,`activation_code`,`forgotten_password_code`,`forgotten_password_time`,`remember_code`,`created_on`,`last_login`,`active`,`nhanvien_id`) values (1,'127.0.0.1','administrator','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,NULL,1268889823,1498593823,1,NULL),(6,'::1','nhanhnhat','$2y$08$T7MzqWl2.bmBx5WaVYEgB.Pdul3TKmsHXXUyjzN7CwqL24MAH0Ev.',NULL,'123@gmail.com',NULL,NULL,NULL,NULL,1498588067,1498592645,1,1),(7,'::1','nhanhnhat1','$2y$08$4RKT.LCsmBjZtNqoYvdwde6QeKWt6yJfVkTfq6yp3RVZhiSQZntU2',NULL,'321321@gmail.com',NULL,NULL,NULL,NULL,1498588167,1498592691,1,2);
+insert  into `users`(`id`,`ip_address`,`username`,`password`,`salt`,`email`,`activation_code`,`forgotten_password_code`,`forgotten_password_time`,`remember_code`,`created_on`,`last_login`,`active`,`nhanvien_id`) values (1,'127.0.0.1','administrator','$2a$07$SeBknntpZror9uyftVopmu61qg0ms8Qv1yV6FG.kQOSM.9QhmTo36','','admin@admin.com','',NULL,NULL,NULL,1268889823,1498606150,1,3),(6,'::1','nhanhnhat','$2y$08$T7MzqWl2.bmBx5WaVYEgB.Pdul3TKmsHXXUyjzN7CwqL24MAH0Ev.',NULL,'123@gmail.com',NULL,NULL,NULL,NULL,1498588067,1498623836,1,1),(7,'::1','nhanhnhat1','$2y$08$4RKT.LCsmBjZtNqoYvdwde6QeKWt6yJfVkTfq6yp3RVZhiSQZntU2',NULL,'321321@gmail.com',NULL,NULL,NULL,NULL,1498588167,1498623994,1,2);
 
 /*Table structure for table `users_groups` */
 
